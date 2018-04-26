@@ -60,6 +60,7 @@ calculate_milestone_feature_importance <- function(
 #' @param expression The expression, if not provided will use the expression within the trajectory
 #' @param method The method to do regressions, can be `ranger` or any regression model from caret
 #' @param method_params Parameters given to the method
+#' @param milestones_oi The milestone(s) for which to calculate feature importance
 #'
 #' @importFrom reshape2 acast
 #' @importFrom ranger ranger
