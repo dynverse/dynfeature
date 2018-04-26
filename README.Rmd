@@ -20,4 +20,4 @@ Included are methods to
 
 The plotting of the top features is nicely intergrated into [dynplot](https://github.com/dynverse/dynplot)
 
-[![dynplot heatmap](https://raw.githubusercontent.com/dynverse/dynplot/master/.readme_files/heatmap-1.png)](https://github.com/dynverse/dynplot)
+[![dynplot heatmap](https://raw.githubusercontent.com/dynverse/dynplot/devel/.readme_files/heatmap-1.png)](https://github.com/dynverse/dynplot)
