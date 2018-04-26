@@ -15,6 +15,7 @@ knitr::opts_chunk$set(fig.path=".readme_files/", warning=FALSE, message=FALSE, e
 [![codecov](https://codecov.io/gh/dynverse/dynfeature/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/dynfeature)
 
 Included are methods to
+
 * Calculate the overall feature importance, using `calculate_overall_feature_importance`
 * Calculate the importance of a feature at a bifurcation point, using `calculate_milestone_feature_importance`
 
