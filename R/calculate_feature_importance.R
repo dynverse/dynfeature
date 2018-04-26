@@ -1,31 +1,37 @@
-#' Calculating feature importances across trajectories
-#'
-#' Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}.
-#'
-#' @param traj A trajectory object containing expression values and a trajectory.
-#' @param method The method to do regressions, can be `ranger` or any regression model from caret
-#' @param method_params Parameters given to the method
-#'
-#' @importFrom reshape2 acast
-#' @importFrom ranger ranger
-#'
+#' @rdname calculate_overall_feature_importance
 #' @export
-trajectory_feature_importances <- function(
+calculate_milestone_feature_importance <- function(
   traj,
+  expression = NULL,
+  milestones_oi = NULL,
   method = "ranger",
   method_params = list()
 ) {
-  testthat::expect_true(dynwrap::is_wrapper_with_expression(traj))
-  testthat::expect_true(dynwrap::is_wrapper_with_trajectory(traj))
+  # process expression
+  if (is.null(expression)) {
+    testthat::expect_true(dynwrap::is_wrapper_with_expression(traj))
 
-  cell_ids <- traj$cell_ids
-  expression <- traj$expression
-
-  if (is.function(expression)) {
-    expression <- expression()
+    expression <- traj$expression
+    if (is.function(expression)) {
+      expression <- expression()
+    }
   }
 
-  milenet_m <- traj$milestone_percentages %>%
+  # process trajectory
+  testthat::expect_true(dynwrap::is_wrapper_with_trajectory(traj))
+  milestone_percentages <- traj$milestone_percentages
+
+  cell_ids <- traj$cell_ids
+
+  testthat::expect_true(all(cell_ids %in% rownames(expression)))
+
+  # process milestones
+  if (is.null(milestones_oi)) {
+    milestones_oi <- traj$milestone_ids
+  }
+
+  milenet_m <- milestone_percentages %>%
+    filter(milestone_id %in% milestones_oi) %>%
     reshape2::acast(cell_id ~ milestone_id, value.var = "percentage", fill = 0) %>%
     expand_matrix(rownames = cell_ids)
 
@@ -42,13 +48,37 @@ trajectory_feature_importances <- function(
     data_frame(milestone_id = colnames(milenet_m)[[i]], feature_id = names(importance), importance)
   })
 
-  importances <- importances %>%
+  importances %>%
+    arrange(desc(importance))
+}
+
+#' Calculating feature importances across trajectories
+#'
+#' Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}. \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory, \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
+#'
+#' @param traj A trajectory object containing expression values and a trajectory.
+#' @param expression The expression, if not provided will use the expression within the trajectory
+#' @param method The method to do regressions, can be `ranger` or any regression model from caret
+#' @param method_params Parameters given to the method
+#'
+#' @importFrom reshape2 acast
+#' @importFrom ranger ranger
+#'
+#' @export
+calculate_overall_feature_importance <- function(
+  traj,
+  expression = NULL,
+  method = "ranger",
+  method_params = list()
+) {
+  calculate_milestone_feature_importance(traj, expression, method=method, method_params=method_params) %>%
     group_by(feature_id) %>%
     summarise(importance=mean(importance)) %>%
     arrange(desc(importance))
-
-  importances
 }
+
+
+
 
 
 get_importance <- function(data, expression, method, method_params) {

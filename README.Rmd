@@ -1,0 +1,19 @@
+---
+output: md_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup1, include=FALSE}
+knitr::opts_chunk$set(fig.path=".readme_files/", warning=FALSE, message=FALSE, error=FALSE, echo = TRUE)
+```
+# dynfeature
+
+**dynfeature** provides common functionality for extracting relevant features (such as genes) from trajectories
+
+[![Build Status](https://travis-ci.org/dynverse/dynfeature.svg)](https://travis-ci.org/dynverse/dynfeature)
+[![codecov](https://codecov.io/gh/dynverse/dynfeature/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/dynfeature)
+
+Included are methods to
+* Calculate the overall feature importance
+* Calculate the importance of a feature at a bifurcation point
