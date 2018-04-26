@@ -62,9 +62,11 @@ wr <-
   )
 
 test_that("Testing trajectory_feature_importances", {
-  gimp <- trajectory_feature_importances(wr)
+  for (method in c("ranger", "lm")) {
+    gimp <- trajectory_feature_importances(wr, method=method)
 
-  expect_equal(gimp %>% map_chr(class), c("feature_id" = "character", "importance" = "numeric"))
+    expect_equal(gimp %>% map_chr(class), c("feature_id" = "character", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% feature_names))
+    expect_true(all(unique(gimp$feature_id) %in% feature_names))
+  }
 })
