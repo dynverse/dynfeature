@@ -3,12 +3,20 @@
 \name{calculate_milestone_feature_importance}
 \alias{calculate_milestone_feature_importance}
 \alias{calculate_overall_feature_importance}
+\alias{calculate_waypoint_feature_importance}
+\alias{calculate_cell_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
 calculate_milestone_feature_importance(traj, expression = NULL,
   milestones_oi = NULL, method = "ranger", method_params = list())
 
 calculate_overall_feature_importance(traj, expression = NULL,
+  method = "ranger", method_params = list())
+
+calculate_waypoint_feature_importance(traj, expression = NULL,
+  waypoints = NULL, method = "ranger", method_params = list())
+
+calculate_cell_feature_importance(traj, expression = NULL,
   method = "ranger", method_params = list())
 }
 \arguments{

@@ -59,20 +59,39 @@ wr <-
     milestone_network = milestone_network,
     divergence_regions = divergence_regions,
     milestone_percentages = milestone_percentages
-  )
+  ) %>%
+  dynwrap::add_waypoints_to_wrapper()
+
+method <- "ranger"
 
 test_that("Testing calculate_overall_feature_importance", {
-  for (method in c("ranger", "lm")) {
-    gimp <- calculate_overall_feature_importance(wr, method=method)
+  gimp <- calculate_overall_feature_importance(wr, method=method)
 
-    expect_equal(gimp %>% map_chr(class), c("feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("feature_id" = "character", "importance" = "numeric"))
 
-    expect_true(all(unique(gimp$feature_id) %in% feature_names))
+  expect_true(all(unique(gimp$feature_id) %in% feature_names))
+})
 
-    gimp <- calculate_milestone_feature_importance(wr, method=method, milestones_oi = milestone_ids)
+test_that("Testing calculate_milestone_feature_importance", {
+  gimp <- calculate_milestone_feature_importance(wr, method=method, milestones_oi = milestone_ids)
 
-    expect_equal(gimp %>% map_chr(class), c("milestone_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("milestone_id" = "character", "feature_id" = "character", "importance" = "numeric"))
 
-    expect_true(all(unique(gimp$feature_id) %in% feature_names))
-  }
+  expect_true(all(unique(gimp$feature_id) %in% feature_names))
+})
+
+test_that("Testing calculate_waypoint_feature_importance", {
+  gimp <- calculate_waypoint_feature_importance(wr, method=method)
+
+  expect_equal(gimp %>% map_chr(class), c("waypoint_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+
+  expect_true(all(unique(gimp$feature_id) %in% feature_names))
+})
+
+test_that("Testing calculate_cell_feature_importance", {
+  gimp <- calculate_cell_feature_importance(wr, method=method)
+
+  expect_equal(gimp %>% map_chr(class), c("cell_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+
+  expect_true(all(unique(gimp$feature_id) %in% feature_names))
 })

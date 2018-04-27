@@ -7,15 +7,7 @@ calculate_milestone_feature_importance <- function(
   method = "ranger",
   method_params = list()
 ) {
-  # process expression
-  if (is.null(expression)) {
-    testthat::expect_true(dynwrap::is_wrapper_with_expression(traj))
-
-    expression <- traj$expression
-    if (is.function(expression)) {
-      expression <- expression()
-    }
-  }
+  expression <- process_expression(traj, expression)
 
   # process trajectory
   testthat::expect_true(dynwrap::is_wrapper_with_trajectory(traj))
@@ -35,21 +27,7 @@ calculate_milestone_feature_importance <- function(
     reshape2::acast(cell_id ~ milestone_id, value.var = "percentage", fill = 0) %>%
     expand_matrix(rownames = cell_ids)
 
-  milenet_m <- milenet_m[,apply(milenet_m, 2, function(x) length(unique(x)) > 1)]
-  importances <- map_df(seq_len(ncol(milenet_m)), function(i) {
-    data <-
-      milenet_m[,i, drop=F] %>%
-      magrittr::set_colnames("PREDICT") %>%
-      cbind(expression) %>%
-      as.data.frame()
-
-    importance <- get_importance(data, expression, method, method_params)
-
-    data_frame(milestone_id = colnames(milenet_m)[[i]], feature_id = names(importance), importance)
-  })
-
-  importances %>%
-    arrange(desc(importance))
+  get_importances(milenet_m, expression, method, method_params) %>% rename(milestone_id = waypoint_id)
 }
 
 #' Calculating feature importances across trajectories
@@ -77,6 +55,58 @@ calculate_overall_feature_importance <- function(
     summarise(importance=mean(importance)) %>%
     arrange(desc(importance))
 }
+
+
+#' @rdname calculate_overall_feature_importance
+#' @export
+calculate_waypoint_feature_importance <- function(
+  traj,
+  expression = NULL,
+  waypoints = NULL,
+  method = "ranger",
+  method_params = list()
+) {
+  if(is.null(waypoints)) {
+    if(is_wrapper_with_waypoints(traj)) {
+      waypoints <- traj$waypoints
+    } else {
+      stop("Add to traj using add_waypoints_to_wrapper")
+    }
+  }
+
+  expression <- process_expression(traj, expression)
+
+  get_importances(t(waypoints$geodesic_distances)[rownames(expression),], expression, method, method_params)
+}
+
+
+#' @rdname calculate_overall_feature_importance
+#' @export
+calculate_cell_feature_importance <- function(
+  traj,
+  expression = NULL,
+  method = "ranger",
+  method_params = list()
+) {
+  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj)
+
+  closest_waypoints <- traj$waypoints$geodesic_distances %>% {
+    tibble(
+      cell_id = colnames(.),
+      waypoint_id = rownames(.)[apply(., 2, which.min)]
+    )
+  }
+
+  cell_feature_importances <- full_join(
+    closest_waypoints,
+    waypoint_feature_importances,
+    "waypoint_id"
+  ) %>% select(-waypoint_id)
+
+  cell_feature_importances
+}
+
+
 
 
 
@@ -109,4 +139,23 @@ get_importance <- function(data, expression, method, method_params) {
     model <- do.call(caret::train, method_params)
     caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
   }
+}
+
+
+get_importances <- function(outcome, expression, method, method_params) {
+  outcome <- outcome[,apply(outcome, 2, function(x) length(unique(x)) > 1)]
+  importances <- map_df(seq_len(ncol(outcome)), function(i) {
+    data <-
+      outcome[,i, drop=F] %>%
+      magrittr::set_colnames("PREDICT") %>%
+      cbind(expression) %>%
+      as.data.frame()
+
+    importance <- get_importance(data, expression, method, method_params)
+
+    data_frame(waypoint_id = colnames(outcome)[[i]], feature_id = names(importance), importance)
+  })
+
+  importances %>%
+    arrange(desc(importance))
 }
