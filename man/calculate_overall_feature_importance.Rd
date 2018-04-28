@@ -29,6 +29,8 @@ calculate_cell_feature_importance(traj, expression = NULL,
 \item{method}{The method to do regressions, can be `ranger` or any regression model from caret}
 
 \item{method_params}{Parameters given to the method}
+
+\item{waypoints}{The waypoints, optional}
 }
 \description{
 Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}. \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory, \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
