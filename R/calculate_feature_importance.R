@@ -71,7 +71,10 @@ calculate_waypoint_feature_importance <- function(
     if(is_wrapper_with_waypoints(traj)) {
       waypoints <- traj$waypoints
     } else {
-      stop("Add to traj using add_waypoints_to_wrapper")
+      message("Adding waypoints to prediction")
+
+      traj <- traj %>% dynwrap::add_waypoints_to_wrapper()
+      waypoints <- traj$waypoints
     }
   }
 
@@ -89,7 +92,11 @@ calculate_cell_feature_importance <- function(
   method = "ranger",
   method_params = list()
 ) {
-  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj)
+  if(!is_wrapper_with_waypoints(traj)) {
+    traj <- traj %>% dynwrap::add_waypoints_to_wrapper()
+  }
+
+  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj, expression, waypoints=NULL, method, method_params)
 
   closest_waypoints <- traj$waypoints$geodesic_distances %>% {
     tibble(
