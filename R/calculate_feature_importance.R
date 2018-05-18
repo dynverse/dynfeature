@@ -2,12 +2,12 @@
 #' @export
 calculate_milestone_feature_importance <- function(
   traj,
-  expression = NULL,
+  expression_source = "expression",
   milestones_oi = NULL,
   method = "ranger",
   method_params = list()
 ) {
-  expression <- process_expression(traj, expression)
+  expression <- get_expression(traj, expression_source)
 
   # process trajectory
   testthat::expect_true(dynwrap::is_wrapper_with_trajectory(traj))
@@ -35,7 +35,7 @@ calculate_milestone_feature_importance <- function(
 #' Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}. \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory, \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
 #'
 #' @param traj A trajectory object containing expression values and a trajectory.
-#' @param expression The expression, if not provided will use the expression within the trajectory
+#' @param expression_source The expression_source, if not provided will use the expression within the trajectory
 #' @param method The method to do regressions, can be `ranger` or any regression model from caret
 #' @param method_params Parameters given to the method
 #' @param milestones_oi The milestone(s) for which to calculate feature importance
@@ -47,22 +47,21 @@ calculate_milestone_feature_importance <- function(
 #' @export
 calculate_overall_feature_importance <- function(
   traj,
-  expression = NULL,
+  expression_source = "expression",
   method = "ranger",
   method_params = list()
 ) {
-  calculate_milestone_feature_importance(traj, expression, method=method, method_params=method_params) %>%
+  calculate_milestone_feature_importance(traj, expression_source, method=method, method_params=method_params) %>%
     group_by(feature_id) %>%
     summarise(importance=mean(importance)) %>%
     arrange(desc(importance))
 }
 
-
 #' @rdname calculate_overall_feature_importance
 #' @export
 calculate_waypoint_feature_importance <- function(
   traj,
-  expression = NULL,
+  expression_source = "expression",
   waypoints = NULL,
   method = "ranger",
   method_params = list()
@@ -78,7 +77,7 @@ calculate_waypoint_feature_importance <- function(
     }
   }
 
-  expression <- process_expression(traj, expression)
+  expression <- get_expression(traj, expression_source)
 
   get_importances(t(waypoints$geodesic_distances)[rownames(expression),], expression, method, method_params)
 }
@@ -88,7 +87,7 @@ calculate_waypoint_feature_importance <- function(
 #' @export
 calculate_cell_feature_importance <- function(
   traj,
-  expression = NULL,
+  expression_source = "expression",
   method = "ranger",
   method_params = list()
 ) {
@@ -96,7 +95,7 @@ calculate_cell_feature_importance <- function(
     traj <- traj %>% dynwrap::add_waypoints_to_wrapper()
   }
 
-  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj, expression, waypoints=NULL, method, method_params)
+  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj, expression_source, waypoints=NULL, method, method_params)
 
   closest_waypoints <- traj$waypoints$geodesic_distances %>% {
     tibble(
@@ -139,14 +138,24 @@ get_importance <- function(data, expression, method, method_params) {
   } else {
     requireNamespace("caret")
 
-    default_params <- list(form=PREDICT~., data=data, method=method)
+    default_params <- list(form=PREDICT~., data=data, method=method, trControl=trainControl(method="none"))
     method_params <- list_modify(default_params, !!!method_params)
 
     if(!method %in% caret::modelLookup()$model) {stop("Invalid method")}
 
     model <- do.call(caret::train, method_params)
     caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
+#
+#     microbenchmark::microbenchmark(lm(PREDICT~., data))
+#     microbenchmark::microbenchmark(caret::train(PREDICT~., data, "lm"))
+#
+#     caret::train(data[, -1], data[, 1], "lm", trControl=trainControl(method="none"), tuneGrid=NULL)
   }
+
+  # regr_task <- makeRegrTask("hi", data, "PREDICT")
+  # learner <- makeLearner("regr.randomForest")
+  #
+  # generateFeatureImportanceData(regr_task, learner=learner)
 }
 
 

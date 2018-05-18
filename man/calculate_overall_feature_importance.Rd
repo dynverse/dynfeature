@@ -7,22 +7,22 @@
 \alias{calculate_cell_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
-calculate_milestone_feature_importance(traj, expression = NULL,
+calculate_milestone_feature_importance(traj, expression_source = "expression",
   milestones_oi = NULL, method = "ranger", method_params = list())
 
-calculate_overall_feature_importance(traj, expression = NULL,
+calculate_overall_feature_importance(traj, expression_source = "expression",
   method = "ranger", method_params = list())
 
-calculate_waypoint_feature_importance(traj, expression = NULL,
+calculate_waypoint_feature_importance(traj, expression_source = "expression",
   waypoints = NULL, method = "ranger", method_params = list())
 
-calculate_cell_feature_importance(traj, expression = NULL,
+calculate_cell_feature_importance(traj, expression_source = "expression",
   method = "ranger", method_params = list())
 }
 \arguments{
 \item{traj}{A trajectory object containing expression values and a trajectory.}
 
-\item{expression}{The expression, if not provided will use the expression within the trajectory}
+\item{expression_source}{The expression_source, if not provided will use the expression within the trajectory}
 
 \item{milestones_oi}{The milestone(s) for which to calculate feature importance}
 
