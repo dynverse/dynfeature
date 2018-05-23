@@ -113,6 +113,84 @@ calculate_cell_feature_importance <- function(
   cell_feature_importances
 }
 
+#' @rdname calculate_overall_feature_importance
+#' @export
+calculate_branch_feature_importance <- function(
+  traj,
+  expression_source = "expression",
+  method = "ranger",
+  method_params = list()
+) {
+
+  milestone_network <- traj$milestone_network %>%
+    mutate(edge_id = as.character(row_number())) %>%
+    select(from, to, edge_id)
+
+  edge_membership <- traj$progressions %>%
+    group_by(cell_id) %>%
+    top_n(1, percentage) %>%
+    ungroup() %>%
+    left_join(milestone_network, c("from", "to")) %>%
+    reshape2::acast(cell_id~edge_id, value.var="percentage") %>%
+    is.na %>%
+    !.
+
+  expression <- get_expression(traj, expression_source)
+
+  get_importances(edge_membership, expression_source, method, method_params) %>%
+    left_join(milestone_network, c("waypoint_id"="edge_id")) %>%
+    select(-waypoint_id)
+}
+
+
+
+#' @rdname calculate_overall_feature_importance
+#' @export
+calculate_branching_point_feature_importance <- function(
+  traj,
+  expression_source = "expression",
+  milestones_oi = traj$milestone_ids,
+  method = "ranger",
+  method_params = list()
+) {
+
+  milestone_network <- traj$milestone_network %>%
+    mutate(edge_id = as.character(row_number())) %>%
+    select(from, to, edge_id)
+
+  edge_membership <- traj$progressions %>%
+    group_by(cell_id) %>%
+    top_n(1, percentage) %>%
+    ungroup() %>%
+    left_join(milestone_network, c("from", "to")) %>%
+    reshape2::acast(cell_id~edge_id, value.var="percentage") %>%
+    is.na %>%
+    !.
+
+  expression <- get_expression(traj, expression_source)
+
+  map_df(milestones_oi, function(milestone_oi) {
+    # select the cells which are close to the milestone
+    prog <- traj$progressions %>%
+      filter(from == milestone_oi | to == milestone_oi) %>%
+      mutate(milestone_other = ifelse(from == milestone_oi, to, from)) %>%
+      group_by(cell_id) %>%
+      top_n(1, percentage) %>%
+      ungroup()
+
+    expression_oi <- expression[prog$cell_id, ]
+    outcome <- as.character(prog$milestone_other)
+
+    if(length(unique(prog$milestone_other)) < 2) {
+      warning("Could not find features specific for milestone ", milestone_oi)
+      tibble()
+    } else {
+      get_importances(outcome, expression_oi, method, method_params) %>%
+        select(feature_id, importance) %>%
+        mutate(milestone_id = milestone_oi)
+    }
+  })
+}
 
 
 
@@ -160,7 +238,12 @@ get_importance <- function(data, expression, method, method_params) {
 
 
 get_importances <- function(outcome, expression, method, method_params) {
-  outcome <- outcome[,apply(outcome, 2, function(x) length(unique(x)) > 1)]
+  if(!is.matrix(outcome)) {
+    outcome <- matrix(outcome, ncol=1)
+    colnames(outcome) <- "1"
+  }
+
+  outcome <- outcome[,apply(outcome, 2, function(x) length(unique(x)) > 1), drop=F]
   importances <- map_df(seq_len(ncol(outcome)), function(i) {
     data <-
       outcome[,i, drop=F] %>%

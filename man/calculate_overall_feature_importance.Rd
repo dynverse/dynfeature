@@ -5,6 +5,8 @@
 \alias{calculate_overall_feature_importance}
 \alias{calculate_waypoint_feature_importance}
 \alias{calculate_cell_feature_importance}
+\alias{calculate_branch_feature_importance}
+\alias{calculate_branching_point_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
 calculate_milestone_feature_importance(traj, expression_source = "expression",
@@ -17,6 +19,13 @@ calculate_waypoint_feature_importance(traj, expression_source = "expression",
   waypoints = NULL, method = "ranger", method_params = list())
 
 calculate_cell_feature_importance(traj, expression_source = "expression",
+  method = "ranger", method_params = list())
+
+calculate_branch_feature_importance(traj, expression_source = "expression",
+  method = "ranger", method_params = list())
+
+calculate_branching_point_feature_importance(traj,
+  expression_source = "expression", milestones_oi = traj$milestone_ids,
   method = "ranger", method_params = list())
 }
 \arguments{
