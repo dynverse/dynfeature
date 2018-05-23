@@ -72,7 +72,7 @@ calculate_waypoint_feature_importance <- function(
     } else {
       message("Adding waypoints to prediction")
 
-      traj <- traj %>% dynwrap::add_waypoints_to_wrapper()
+      traj <- traj %>% dynwrap::add_waypoints()
       waypoints <- traj$waypoints
     }
   }
@@ -92,7 +92,7 @@ calculate_cell_feature_importance <- function(
   method_params = list()
 ) {
   if(!is_wrapper_with_waypoints(traj)) {
-    traj <- traj %>% dynwrap::add_waypoints_to_wrapper()
+    traj <- traj %>% dynwrap::add_waypoints()
   }
 
   waypoint_feature_importances <- calculate_waypoint_feature_importance(traj, expression_source, waypoints=NULL, method, method_params)
