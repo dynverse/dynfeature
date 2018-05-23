@@ -50,17 +50,17 @@ wr <-
     id = id,
     cell_ids = cell_ids
   ) %>%
-  dynwrap::add_expression_to_wrapper(
+  dynwrap::add_expression(
     counts = counts,
     expression = expression
   ) %>%
-  dynwrap::add_trajectory_to_wrapper(
+  dynwrap::add_trajectory(
     milestone_ids = milestone_ids,
     milestone_network = milestone_network,
     divergence_regions = divergence_regions,
     milestone_percentages = milestone_percentages
   ) %>%
-  dynwrap::add_waypoints_to_wrapper()
+  dynwrap::add_waypoints()
 
 method <- "ranger"
 
