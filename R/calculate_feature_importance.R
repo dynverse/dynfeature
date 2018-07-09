@@ -192,11 +192,6 @@ calculate_branching_point_feature_importance <- function(
   })
 }
 
-
-
-
-
-
 get_importance <- function(data, expression, method, method_params) {
   if (method == "ranger") {
     requireNamespace("ranger")
@@ -223,19 +218,8 @@ get_importance <- function(data, expression, method, method_params) {
 
     model <- do.call(caret::train, method_params)
     caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
-#
-#     microbenchmark::microbenchmark(lm(PREDICT~., data))
-#     microbenchmark::microbenchmark(caret::train(PREDICT~., data, "lm"))
-#
-#     caret::train(data[, -1], data[, 1], "lm", trControl=trainControl(method="none"), tuneGrid=NULL)
   }
-
-  # regr_task <- makeRegrTask("hi", data, "PREDICT")
-  # learner <- makeLearner("regr.randomForest")
-  #
-  # generateFeatureImportanceData(regr_task, learner=learner)
 }
-
 
 get_importances <- function(outcome, expression, method, method_params) {
   if(!is.matrix(outcome)) {
