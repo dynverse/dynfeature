@@ -22,6 +22,10 @@ calculate_milestone_feature_importance <- function(
     milestones_oi <- traj$milestone_ids
   }
 
+  if (nrow(milestone_percentages) < 2) {
+    stop("Need 3 or more cells in a trajectory to determine important features")
+  }
+
   milenet_m <- milestone_percentages %>%
     filter(milestone_id %in% milestones_oi) %>%
     reshape2::acast(cell_id ~ milestone_id, value.var = "percentage", fill = 0) %>%
