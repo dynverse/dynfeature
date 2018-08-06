@@ -204,8 +204,9 @@ get_importance <- function(data, expression, method, method_params) {
     default_params <- list(
       dependent.variable.name="PREDICT",
       data = data,
-      importance="impurity",
-      mtry = function(x) ncol(x) * .01
+      importance= "impurity",
+      mtry = function(x) ncol(x) * .01,
+      num.threads = 1
     )
     method_params <- list_modify(default_params, !!!method_params)
     if (is.function(method_params$mtry)) {method_params$mtry <- method_params$mtry(expression)}
