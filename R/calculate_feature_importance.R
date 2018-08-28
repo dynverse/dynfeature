@@ -229,7 +229,7 @@ get_importance <- function(data, expression, method, method_params, verbose = TR
     default_params <- list(
       dependent.variable.name = "PREDICT",
       data = data,
-      importance= "impurity",
+      importance = "impurity",
       mtry = function(x) ncol(x) * .01,
       num.threads = 1,
       verbose = verbose
