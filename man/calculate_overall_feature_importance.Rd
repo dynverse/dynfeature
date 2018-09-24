@@ -11,26 +11,26 @@
 \usage{
 calculate_milestone_feature_importance(traj,
   expression_source = "expression", milestones_oi = NULL,
-  method = "ranger", method_params = list(), verbose = TRUE)
+  method = "ranger", method_params = list(), verbose = FALSE)
 
 calculate_overall_feature_importance(traj,
   expression_source = "expression", method = "ranger",
-  method_params = list(), verbose = TRUE)
+  method_params = list(), verbose = FALSE)
 
 calculate_waypoint_feature_importance(traj,
   expression_source = "expression", waypoints = NULL,
-  method = "ranger", method_params = list(), verbose = TRUE)
+  method = "ranger", method_params = list(), verbose = FALSE)
 
 calculate_cell_feature_importance(traj, expression_source = "expression",
-  method = "ranger", method_params = list(), verbose = TRUE)
+  method = "ranger", method_params = list(), verbose = FALSE)
 
 calculate_branch_feature_importance(traj,
   expression_source = "expression", method = "ranger",
-  method_params = list(), verbose = TRUE)
+  method_params = list(), verbose = FALSE)
 
 calculate_branching_point_feature_importance(traj,
   expression_source = "expression", milestones_oi = traj$milestone_ids,
-  method = "ranger", method_params = list(), verbose = TRUE)
+  method = "ranger", method_params = list(), verbose = FALSE)
 }
 \arguments{
 \item{traj}{A trajectory object containing expression values and a trajectory.}

@@ -6,7 +6,7 @@ calculate_milestone_feature_importance <- function(
   milestones_oi = NULL,
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
   expression <- get_expression(traj, expression_source)
 
@@ -58,7 +58,7 @@ calculate_overall_feature_importance <- function(
   expression_source = "expression",
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
   calculate_milestone_feature_importance(
     traj = traj,
@@ -80,7 +80,7 @@ calculate_waypoint_feature_importance <- function(
   waypoints = NULL,
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
   if(is.null(waypoints)) {
     if(is_wrapper_with_waypoints(traj)) {
@@ -106,7 +106,7 @@ calculate_cell_feature_importance <- function(
   expression_source = "expression",
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
   if(!is_wrapper_with_waypoints(traj)) {
     traj <- traj %>% dynwrap::add_waypoints()
@@ -144,7 +144,7 @@ calculate_branch_feature_importance <- function(
   expression_source = "expression",
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
 
   milestone_network <- traj$milestone_network %>%
@@ -177,7 +177,7 @@ calculate_branching_point_feature_importance <- function(
   milestones_oi = traj$milestone_ids,
   method = "ranger",
   method_params = list(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
 
   milestone_network <- traj$milestone_network %>%
@@ -221,7 +221,7 @@ calculate_branching_point_feature_importance <- function(
     })
 }
 
-get_importance <- function(data, expression, method, method_params, verbose = TRUE) {
+get_importance <- function(data, expression, method, method_params, verbose = FALSE) {
   if (method == "ranger") {
     requireNamespace("ranger")
     # process ranger params
