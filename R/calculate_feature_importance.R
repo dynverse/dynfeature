@@ -252,7 +252,7 @@ get_importance <- function(data, expression, method, method_params, verbose = FA
   }
 }
 
-get_importances <- function(outcome, expression, method, method_params, verbose = verbose) {
+get_importances <- function(outcome, expression, method, method_params, verbose = FALSE) {
   if(!is.matrix(outcome)) {
     outcome <- matrix(outcome, ncol = 1)
     colnames(outcome) <- "1"
@@ -267,7 +267,13 @@ get_importances <- function(outcome, expression, method, method_params, verbose 
       cbind(expression) %>%
       as.data.frame()
 
-    importance <- get_importance(data, expression, method, method_params, verbose)
+    importance <- get_importance(
+      data = data,
+      expression = expression,
+      method = method,
+      method_params = method_params,
+      verbose = verbose
+    )
 
     data_frame(waypoint_id = colnames(outcome)[[i]], feature_id = names(importance), importance)
   })
