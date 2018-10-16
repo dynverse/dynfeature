@@ -5,7 +5,8 @@ calculate_milestone_feature_importance <- function(
   expression_source = "expression",
   milestones_oi = NULL,
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
   expression <- get_expression(traj, expression_source)
 
@@ -22,17 +23,23 @@ calculate_milestone_feature_importance <- function(
     milestones_oi <- traj$milestone_ids
   }
 
+  if (nrow(milestone_percentages) < 2) {
+    stop("Need 3 or more cells in a trajectory to determine important features")
+  }
+
   milenet_m <- milestone_percentages %>%
     filter(milestone_id %in% milestones_oi) %>%
     reshape2::acast(cell_id ~ milestone_id, value.var = "percentage", fill = 0) %>%
     expand_matrix(rownames = cell_ids)
 
-  get_importances(milenet_m, expression, method, method_params) %>% rename(milestone_id = waypoint_id)
+  get_importances(milenet_m, expression, method, method_params, verbose) %>% rename(milestone_id = waypoint_id)
 }
 
 #' Calculating feature importances across trajectories
 #'
-#' Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}. \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory, \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
+#' Uses the feature importance measures of \code{\link[ranger]{ranger}} or \code{caret}.
+#' \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory,
+#'  \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
 #'
 #' @param traj A trajectory object containing expression values and a trajectory.
 #' @param expression_source The expression_source, if not provided will use the expression within the trajectory
@@ -40,6 +47,7 @@ calculate_milestone_feature_importance <- function(
 #' @param method_params Parameters given to the method
 #' @param milestones_oi The milestone(s) for which to calculate feature importance
 #' @param waypoints The waypoints, optional
+#' @param verbose Whether or not to print helpful messages.
 #'
 #' @importFrom reshape2 acast
 #' @importFrom ranger ranger
@@ -49,9 +57,16 @@ calculate_overall_feature_importance <- function(
   traj,
   expression_source = "expression",
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
-  calculate_milestone_feature_importance(traj, expression_source, method=method, method_params=method_params) %>%
+  calculate_milestone_feature_importance(
+    traj = traj,
+    expression_source = expression_source,
+    method = method,
+    method_params = method_params,
+    verbose = verbose
+  ) %>%
     group_by(feature_id) %>%
     summarise(importance=mean(importance)) %>%
     arrange(desc(importance))
@@ -64,7 +79,8 @@ calculate_waypoint_feature_importance <- function(
   expression_source = "expression",
   waypoints = NULL,
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
   if(is.null(waypoints)) {
     if(is_wrapper_with_waypoints(traj)) {
@@ -79,7 +95,7 @@ calculate_waypoint_feature_importance <- function(
 
   expression <- get_expression(traj, expression_source)
 
-  get_importances(t(waypoints$geodesic_distances)[rownames(expression),], expression, method, method_params)
+  get_importances(t(waypoints$geodesic_distances)[rownames(expression),], expression, method, method_params, verbose)
 }
 
 
@@ -89,13 +105,21 @@ calculate_cell_feature_importance <- function(
   traj,
   expression_source = "expression",
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
   if(!is_wrapper_with_waypoints(traj)) {
     traj <- traj %>% dynwrap::add_waypoints()
   }
 
-  waypoint_feature_importances <- calculate_waypoint_feature_importance(traj, expression_source, waypoints=NULL, method, method_params)
+  waypoint_feature_importances <- calculate_waypoint_feature_importance(
+    traj,
+    expression_source,
+    waypoints = NULL,
+    method,
+    method_params,
+    verbose
+  )
 
   closest_waypoints <- traj$waypoints$geodesic_distances %>% {
     tibble(
@@ -119,7 +143,8 @@ calculate_branch_feature_importance <- function(
   traj,
   expression_source = "expression",
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
 
   milestone_network <- traj$milestone_network %>%
@@ -137,7 +162,7 @@ calculate_branch_feature_importance <- function(
 
   expression <- get_expression(traj, expression_source)
 
-  get_importances(edge_membership, expression_source, method, method_params) %>%
+  get_importances(edge_membership, expression_source, method, method_params, verbose) %>%
     left_join(milestone_network, c("waypoint_id"="edge_id")) %>%
     select(-waypoint_id)
 }
@@ -151,7 +176,8 @@ calculate_branching_point_feature_importance <- function(
   expression_source = "expression",
   milestones_oi = traj$milestone_ids,
   method = "ranger",
-  method_params = list()
+  method_params = list(),
+  verbose = FALSE
 ) {
 
   milestone_network <- traj$milestone_network %>%
@@ -169,44 +195,44 @@ calculate_branching_point_feature_importance <- function(
 
   expression <- get_expression(traj, expression_source)
 
-  map_df(milestones_oi, function(milestone_oi) {
-    # select the cells which are close to the milestone
-    prog <- traj$progressions %>%
-      filter(from == milestone_oi | to == milestone_oi) %>%
-      mutate(milestone_other = ifelse(from == milestone_oi, to, from)) %>%
-      group_by(cell_id) %>%
-      top_n(1, percentage) %>%
-      ungroup()
+  map_df(
+    seq_along(milestones_oi), function(i) {
+      if (verbose) cat("Processing milestone ", i , "/", length(milestones_oi), "\n", sep = "")
+      milestone_oi <- milestones_oi[[i]]
+      # select the cells which are close to the milestone
+      prog <- traj$progressions %>%
+        filter(from == milestone_oi | to == milestone_oi) %>%
+        mutate(milestone_other = ifelse(from == milestone_oi, to, from)) %>%
+        group_by(cell_id) %>%
+        top_n(1, percentage) %>%
+        ungroup()
 
-    expression_oi <- expression[prog$cell_id, ]
-    outcome <- as.character(prog$milestone_other)
+      expression_oi <- expression[prog$cell_id, ]
+      outcome <- as.character(prog$milestone_other)
 
-    if(length(unique(prog$milestone_other)) < 2) {
-      warning("Could not find features specific for milestone ", milestone_oi)
-      tibble()
-    } else {
-      get_importances(outcome, expression_oi, method, method_params) %>%
-        select(feature_id, importance) %>%
-        mutate(milestone_id = milestone_oi)
-    }
-  })
+      if(length(unique(prog$milestone_other)) < 2) {
+        warning("Could not find features specific for milestone ", milestone_oi)
+        tibble()
+      } else {
+        get_importances(outcome, expression_oi, method, method_params, verbose) %>%
+          select(feature_id, importance) %>%
+          mutate(milestone_id = milestone_oi)
+      }
+    })
 }
 
-
-
-
-
-
-get_importance <- function(data, expression, method, method_params) {
+get_importance <- function(data, expression, method, method_params, verbose = FALSE) {
   if (method == "ranger") {
     requireNamespace("ranger")
     # process ranger params
 
     default_params <- list(
-      dependent.variable.name="PREDICT",
+      dependent.variable.name = "PREDICT",
       data = data,
-      importance="impurity",
-      mtry = function(x) ncol(x) * .01
+      importance = "impurity",
+      mtry = function(x) ncol(x) * .01,
+      num.threads = 1,
+      verbose = verbose
     )
     method_params <- list_modify(default_params, !!!method_params)
     if (is.function(method_params$mtry)) {method_params$mtry <- method_params$mtry(expression)}
@@ -216,42 +242,38 @@ get_importance <- function(data, expression, method, method_params) {
   } else {
     requireNamespace("caret")
 
-    default_params <- list(form=PREDICT~., data=data, method=method, trControl=trainControl(method="none"))
+    default_params <- list(form = PREDICT ~ ., data = data, method = method, trControl = trainControl(method = "none"))
     method_params <- list_modify(default_params, !!!method_params)
 
     if(!method %in% caret::modelLookup()$model) {stop("Invalid method")}
 
     model <- do.call(caret::train, method_params)
     caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
-#
-#     microbenchmark::microbenchmark(lm(PREDICT~., data))
-#     microbenchmark::microbenchmark(caret::train(PREDICT~., data, "lm"))
-#
-#     caret::train(data[, -1], data[, 1], "lm", trControl=trainControl(method="none"), tuneGrid=NULL)
   }
-
-  # regr_task <- makeRegrTask("hi", data, "PREDICT")
-  # learner <- makeLearner("regr.randomForest")
-  #
-  # generateFeatureImportanceData(regr_task, learner=learner)
 }
 
-
-get_importances <- function(outcome, expression, method, method_params) {
+get_importances <- function(outcome, expression, method, method_params, verbose = FALSE) {
   if(!is.matrix(outcome)) {
-    outcome <- matrix(outcome, ncol=1)
+    outcome <- matrix(outcome, ncol = 1)
     colnames(outcome) <- "1"
   }
 
   outcome <- outcome[,apply(outcome, 2, function(x) length(unique(x)) > 1), drop=F]
   importances <- map_df(seq_len(ncol(outcome)), function(i) {
+    if (verbose) cat("Generating forest ", i , "/", ncol(outcome), "\n", sep = "")
     data <-
       outcome[,i, drop=F] %>%
       magrittr::set_colnames("PREDICT") %>%
       cbind(expression) %>%
       as.data.frame()
 
-    importance <- get_importance(data, expression, method, method_params)
+    importance <- get_importance(
+      data = data,
+      expression = expression,
+      method = method,
+      method_params = method_params,
+      verbose = verbose
+    )
 
     data_frame(waypoint_id = colnames(outcome)[[i]], feature_id = names(importance), importance)
   })

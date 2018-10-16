@@ -9,24 +9,28 @@
 \alias{calculate_branching_point_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
-calculate_milestone_feature_importance(traj, expression_source = "expression",
-  milestones_oi = NULL, method = "ranger", method_params = list())
+calculate_milestone_feature_importance(traj,
+  expression_source = "expression", milestones_oi = NULL,
+  method = "ranger", method_params = list(), verbose = FALSE)
 
-calculate_overall_feature_importance(traj, expression_source = "expression",
-  method = "ranger", method_params = list())
+calculate_overall_feature_importance(traj,
+  expression_source = "expression", method = "ranger",
+  method_params = list(), verbose = FALSE)
 
-calculate_waypoint_feature_importance(traj, expression_source = "expression",
-  waypoints = NULL, method = "ranger", method_params = list())
+calculate_waypoint_feature_importance(traj,
+  expression_source = "expression", waypoints = NULL,
+  method = "ranger", method_params = list(), verbose = FALSE)
 
 calculate_cell_feature_importance(traj, expression_source = "expression",
-  method = "ranger", method_params = list())
+  method = "ranger", method_params = list(), verbose = FALSE)
 
-calculate_branch_feature_importance(traj, expression_source = "expression",
-  method = "ranger", method_params = list())
+calculate_branch_feature_importance(traj,
+  expression_source = "expression", method = "ranger",
+  method_params = list(), verbose = FALSE)
 
 calculate_branching_point_feature_importance(traj,
   expression_source = "expression", milestones_oi = traj$milestone_ids,
-  method = "ranger", method_params = list())
+  method = "ranger", method_params = list(), verbose = FALSE)
 }
 \arguments{
 \item{traj}{A trajectory object containing expression values and a trajectory.}
@@ -39,8 +43,12 @@ calculate_branching_point_feature_importance(traj,
 
 \item{method_params}{Parameters given to the method}
 
+\item{verbose}{Whether or not to print helpful messages.}
+
 \item{waypoints}{The waypoints, optional}
 }
 \description{
-Uses the feature importance measures of \code{\link[ranger]{ranger}} or  \code{caret}. \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory, \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
+Uses the feature importance measures of \code{\link[ranger]{ranger}} or \code{caret}.
+\code{calculate_overall_feature_importance} calculates the importance for the whole trajectory,
+ \code{calculate_milestone_feature_importance} calculates it for individual milestones (eg. branching points)
 }
