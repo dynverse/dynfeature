@@ -1,7 +1,7 @@
 Package: dynfeature
 Type: Package
 Title: Dynamic feature importance
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
@@ -27,3 +27,13 @@ RoxygenNote: 6.1.0
 Remotes:
   dynverse/dynutils,
   dynverse/dynwrap
+Collate: 
+    'calculate_feature_importances.R'
+    'calculate_branch_feature_importance.R'
+    'calculate_branching_point_feature_importance.R'
+    'calculate_cell_feature_importance.R'
+    'calculate_milestone_feature_importance.R'
+    'calculate_overall_feature_importance.R'
+    'calculate_waypoint_feature_importance.R'
+    'fi_methods.R'
+    'package.R'

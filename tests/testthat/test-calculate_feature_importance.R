@@ -62,36 +62,35 @@ wr <-
   ) %>%
   dynwrap::add_waypoints()
 
-method <- "ranger"
 
 test_that("Testing calculate_overall_feature_importance", {
-  gimp <- calculate_overall_feature_importance(wr, method=method)
+  gimp <- calculate_overall_feature_importance(wr)
 
-  expect_equal(gimp %>% map_chr(class), c("feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("feature_id" = "factor", "importance" = "numeric"))
 
   expect_true(all(unique(gimp$feature_id) %in% feature_names))
 })
 
 test_that("Testing calculate_milestone_feature_importance", {
-  gimp <- calculate_milestone_feature_importance(wr, method=method, milestones_oi = milestone_ids)
+  gimp <- calculate_milestone_feature_importance(wr, milestones_oi = milestone_ids)
 
-  expect_equal(gimp %>% map_chr(class), c("milestone_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("milestone_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
   expect_true(all(unique(gimp$feature_id) %in% feature_names))
 })
 
 test_that("Testing calculate_waypoint_feature_importance", {
-  gimp <- calculate_waypoint_feature_importance(wr, method=method)
+  gimp <- calculate_waypoint_feature_importance(wr)
 
-  expect_equal(gimp %>% map_chr(class), c("waypoint_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("waypoint_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
   expect_true(all(unique(gimp$feature_id) %in% feature_names))
 })
 
 test_that("Testing calculate_cell_feature_importance", {
-  gimp <- calculate_cell_feature_importance(wr, method=method)
+  gimp <- calculate_cell_feature_importance(wr)
 
-  expect_equal(gimp %>% map_chr(class), c("cell_id" = "character", "feature_id" = "character", "importance" = "numeric"))
+  expect_equal(gimp %>% map_chr(class), c("cell_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
   expect_true(all(unique(gimp$feature_id) %in% feature_names))
 })
