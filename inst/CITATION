@@ -9,5 +9,5 @@ citEntry(
   number   = "",
   pages    = "",
   doi      = "",
-  textVersion = "Cannoodt R., and Saelens W., dynfeature: Calculating feature importance scores from trajectories, In Progress, 2019."
+  textVersion = "Cannoodt R. and Saelens W., dynfeature: Calculating feature importance scores from trajectories, In Progress, 2019."
 )
