@@ -25,8 +25,8 @@ heatmap](https://raw.githubusercontent.com/dynverse/dynplot/devel/.readme_files/
 
 ## Latest changes
 
-Check out `news(package = "princurve")` or [NEWS.md](inst/NEWS.md) for a
-full list of
+Check out `news(package = "dynfeature")` or [NEWS.md](inst/NEWS.md) for
+a full list of
 changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
