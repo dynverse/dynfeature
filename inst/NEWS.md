@@ -12,6 +12,11 @@
 
 * MINOR CHANGE: Add NEWS, and add news section to README.
 
+* DOCUMENTATION: Turned on markdown for Roxygen.
+
+* DOCUMENTATION: Improved documentation on expression_source.
+
+
 # dynfeature 0.1.0 (26-04-2018)
 
 * INITIAL RELEASE: dynfeature, calculating feature importance scores from trajectories.
