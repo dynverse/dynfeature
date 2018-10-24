@@ -10,9 +10,9 @@ calculate_feature_importances(X, Y, fi_method = fi_ranger_rf_lite(),
 \arguments{
 \item{X}{A data frame containing the features as columns.}
 
-\item{Y}{A data frame of predictor variables, with `nrow(Y) == nrow(X)`.}
+\item{Y}{A data frame of predictor variables, with \code{nrow(Y) == nrow(X)}.}
 
-\item{fi_method}{A feature importance method. Default: `fi_ranger_rf_lite()`. Check `?fi_methods` for a full list of available feature importance methods.}
+\item{fi_method}{A feature importance method. Default: \code{fi_ranger_rf_lite()}. Check \code{?fi_methods} for a full list of available feature importance methods.}
 
 \item{verbose}{Whether to print out extra information.}
 }
