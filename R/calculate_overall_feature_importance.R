@@ -5,7 +5,10 @@
 #' \code{calculate_milestone_feature_importance} calculates it for individual milestones (e.g. branching points)
 #'
 #' @param traj A trajectory object containing expression values and a trajectory.
-#' @param expression_source The expression_source, if not provided will use the expression within the trajectory
+#' @param expression_source The expression data matrix, with features as columns.
+#'   * If a matrix is provided, it is used as is.
+#'   * If a character is provided, `traj[[expression_source]]` should contain the matrix.
+#'   * If a function is provided, that function will be called in order to obtain the expression (useful for lazy loading).
 #' @param milestones_oi The milestone(s) for which to calculate feature importance
 #' @param waypoints The waypoints, optional
 #'

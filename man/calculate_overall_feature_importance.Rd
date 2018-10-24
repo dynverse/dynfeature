@@ -40,9 +40,14 @@ calculate_waypoint_feature_importance(traj,
 \arguments{
 \item{traj}{A trajectory object containing expression values and a trajectory.}
 
-\item{expression_source}{The expression_source, if not provided will use the expression within the trajectory}
+\item{expression_source}{The expression data matrix, with features as columns.
+\itemize{
+\item If a matrix is provided, it is used as is.
+\item If a character is provided, \code{traj[[expression_source]]} should contain the matrix.
+\item If a function is provided, that function will be called in order to obtain the expression (useful for lazy loading).
+}}
 
-\item{fi_method}{A feature importance method. Default: `fi_ranger_rf_lite()`. Check `?fi_methods` for a full list of available feature importance methods.}
+\item{fi_method}{A feature importance method. Default: \code{fi_ranger_rf_lite()}. Check \code{?fi_methods} for a full list of available feature importance methods.}
 
 \item{verbose}{Whether to print out extra information.}
 
