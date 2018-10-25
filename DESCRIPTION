@@ -1,11 +1,11 @@
 Package: dynfeature
 Type: Package
 Title: Dynamic feature importance
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
-Description: Calculating the importance of features (such as genes) in the trajectory
+Description: Calculating feature importance scores from trajectories
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -24,6 +24,17 @@ Imports:
 Suggests:
   caret
 RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE)
 Remotes:
   dynverse/dynutils,
   dynverse/dynwrap
+Collate: 
+    'calculate_feature_importances.R'
+    'calculate_branch_feature_importance.R'
+    'calculate_branching_point_feature_importance.R'
+    'calculate_cell_feature_importance.R'
+    'calculate_milestone_feature_importance.R'
+    'calculate_overall_feature_importance.R'
+    'calculate_waypoint_feature_importance.R'
+    'fi_methods.R'
+    'package.R'

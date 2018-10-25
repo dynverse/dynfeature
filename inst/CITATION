@@ -1,0 +1,13 @@
+citEntry(
+  entry    = "Article",
+  author   = "Robrecht Cannoodt and Wouter Saelens",
+  title    = "dynfeature: Calculating feature importance scores from trajectories",
+  journal  = "In Progress",
+  year     = "2019",
+  month    = "",
+  volume   = "",
+  number   = "",
+  pages    = "",
+  doi      = "",
+  textVersion = "Cannoodt R. and Saelens W., dynfeature: Calculating feature importance scores from trajectories, In Progress, 2019."
+)
