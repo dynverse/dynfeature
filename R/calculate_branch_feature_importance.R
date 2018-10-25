@@ -29,13 +29,24 @@ calculate_branch_feature_importance <- inherit_default_params(
 
     expression <- get_expression(traj, expression_source)
 
-    calculate_feature_importances(
-      X = expression_source,
+
+    out <- calculate_feature_importances(
+      X = expression,
       Y = edge_membership,
       fi_method = fi_method,
       verbose = verbose
-    ) %>%
-      left_join(milestone_network, c("feature_id" = "edge_id")) %>%
-      select(-feature_id)
+    )
+    suppressWarnings({
+      out <- out %>%
+        left_join(milestone_network, c("predictor_id" = "edge_id"))
+    })
+
+    out %>%
+      transmute(
+        feature_id,
+        from = factor(from, traj$milestone_ids),
+        to = factor(to, traj$milestone_ids),
+        importance
+      )
   }
 )
