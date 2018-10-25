@@ -54,6 +54,12 @@ changes.
 
   - DOCUMENTATION: Improved documentation on expression\_source.
 
+  - TESTING: Improved testing with a larger dataset, and will check
+    whether the overall feature importance produces decent results.
+
+  - MINOR CHANGE: Feature importance functions will always return
+    factors instead of characters.
+
 ### Latest changes in dynfeature 0.1.0 (26-04-2018)
 
   - INITIAL RELEASE: dynfeature, calculating feature importance scores
