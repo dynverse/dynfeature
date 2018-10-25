@@ -31,7 +31,11 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Latest changes in dynfeature 0.2.0 (21-10-2018)
+### Latest changes in dynfeature 0.3.0 (unreleased)
+
+  - Nothing yet
+
+### Latest changes in dynfeature 0.2.0 (25-10-2018)
 
   - SPEED UP: Added `fi_ranger_rf_lite()`, which scales much better
     w.r.t. the number of samples and features, at the cost of increasing
@@ -59,8 +63,3 @@ changes.
 
   - MINOR CHANGE: Feature importance functions will always return
     factors instead of characters.
-
-### Latest changes in dynfeature 0.1.0 (26-04-2018)
-
-  - INITIAL RELEASE: dynfeature, calculating feature importance scores
-    from trajectories.
