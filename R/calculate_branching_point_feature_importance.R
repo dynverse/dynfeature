@@ -30,7 +30,8 @@ calculate_branching_point_feature_importance <- inherit_default_params(
     expression <- get_expression(traj, expression_source)
 
     map_df(
-      seq_along(milestones_oi), function(i) {
+      seq_along(milestones_oi),
+      function(i) {
         if (verbose) cat("Processing milestone ", i , "/", length(milestones_oi), "\n", sep = "")
 
         milestone_oi <- milestones_oi[[i]]
@@ -57,8 +58,13 @@ calculate_branching_point_feature_importance <- inherit_default_params(
             fi_method = fi_method,
             verbose = verbose
           ) %>%
-            transmute(milestone_id = milestone_oi, feature_id, importance)
+            transmute(
+              milestone_id = factor(milestone_oi, levels = traj$milestone_ids),
+              feature_id,
+              importance
+            )
         }
-      })
+      }
+    )
   }
 )
