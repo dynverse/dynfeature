@@ -16,6 +16,10 @@ calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(),
 
     y <- Y %>% pull(!!i)
 
+    if (is.character(y) || is.logical(y)) {
+      y <- factor(y)
+    }
+
     # return 0 if y are all the same values
     if (length(unique(y)) == 1) {
       importance <- set_names(rep(0, ncol(X)), colnames(X))
