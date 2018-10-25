@@ -55,14 +55,14 @@ fi_ranger_rf <- function(
 
       default_params <- list(
         importance = "impurity",
-        mtry = function(nrow, ncol) sqrt(ncol) * .01,
+        mtry = function(nrow, ncol) max(sqrt(ncol) * .01, 1),
         write.forest = FALSE
       )
 
       method_params <-
         default_params %>%
         list_modify(!!!params) %>%
-        apply_function_params(nrow(X), ncol(X)) %>%
+        apply_function_params(nrow = nrow(X), ncol = ncol(X)) %>%
         list_modify(
           data = data,
           dependent.variable.name = "PREDICT",
@@ -107,7 +107,7 @@ fi_caret <- function(
       method_params <-
         default_params %>%
         list_modify(!!!params) %>%
-        apply_function_params(nrow(X), ncol(X)) %>%
+        apply_function_params(nrow = nrow(X), ncol = ncol(X)) %>%
         list_modify(
           form = PREDICT ~ .,
           data = data
