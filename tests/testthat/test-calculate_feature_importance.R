@@ -11,8 +11,8 @@ milestone_network <- tibble::tribble(
   "A",   "D", 1,       TRUE
 )
 
-num_cells <- 500
-num_features <- 700
+num_cells <- 200
+num_features <- 300
 
 cell_ids <- paste0("cell_", seq_len(num_cells))
 feature_ids <- paste0("feature_", seq_len(num_features))
