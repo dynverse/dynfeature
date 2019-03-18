@@ -7,6 +7,9 @@
 calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(), verbose = FALSE) {
   # if Y is a vector or a matrix, turn it into a data frame
   if (!is.data.frame(Y)) {
+    if ("dgCMatrix" %in% class(Y)) {
+      Y <- as.matrix(Y)
+    }
     Y <- as_data_frame(Y)
   }
 
