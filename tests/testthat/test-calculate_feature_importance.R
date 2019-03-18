@@ -64,7 +64,7 @@ module_percentages <-
 
 # generate module expression
 distance_from_module <-
-  dynwrap::compute_tented_geodesic_distances(
+  dynwrap::calculate_geodesic_distances(
     traj,
     waypoint_milestone_percentages = module_percentages %>% rename(waypoint_id = module_id)
   )
