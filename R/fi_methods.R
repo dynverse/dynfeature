@@ -54,6 +54,7 @@ fi_ranger_rf <- function(
       )
 
       default_params <- list(
+        num.threads = 1,
         importance = "impurity",
         mtry = function(nrow, ncol) max(sqrt(ncol) * .01, 1),
         write.forest = FALSE
