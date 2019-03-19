@@ -1,6 +1,8 @@
 # dynfeature 0.3.0 (unreleased)
 
-* Nothing yet
+* MINOR CHANGE: Use only one core by default.
+
+* MINOR CHANGE: Support sparse matrices
 
 # dynfeature 0.2.0 (25-10-2018)
 

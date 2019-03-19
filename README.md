@@ -31,11 +31,13 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Latest changes in dynfeature 0.3.0 (unreleased)
+### Recent changes in dynfeature 0.3.0 (unreleased)
 
-  - Nothing yet
+  - MINOR CHANGE: Use only one core by default.
 
-### Latest changes in dynfeature 0.2.0 (25-10-2018)
+  - MINOR CHANGE: Support sparse matrices
+
+### Recent changes in dynfeature 0.2.0 (25-10-2018)
 
   - SPEED UP: Added `fi_ranger_rf_lite()`, which scales much better
     w.r.t. the number of samples and features, at the cost of increasing
