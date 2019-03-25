@@ -28,7 +28,7 @@ progressions <-
   ) %>%
   select(cell_id, from, to, percentage)
 
-traj <-
+trajectory <-
   dynwrap::wrap_data(
     cell_ids = cell_ids
   ) %>%
@@ -65,7 +65,7 @@ module_percentages <-
 # generate module expression
 distance_from_module <-
   dynwrap::calculate_geodesic_distances(
-    traj,
+    trajectory,
     waypoint_milestone_percentages = module_percentages %>% rename(waypoint_id = module_id)
   )
 
@@ -108,8 +108,8 @@ expression <- expression[cell_ids, feature_ids]
 counts <- round(2^expression - 1)
 
 # add expression to trajectory
-traj <-
-  traj %>%
+trajectory <-
+  trajectory %>%
   dynwrap::add_expression(
     counts = counts,
     expression = expression,
@@ -125,55 +125,55 @@ traj <-
 
 
 test_that("Testing calculate_overall_feature_importance", {
-  gimp <- calculate_overall_feature_importance(traj)
+  gimp <- calculate_overall_feature_importance(trajectory)
 
   expect_equal(gimp %>% map_chr(class), c("feature_id" = "factor", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% traj$feature_info$feature_id))
+  expect_true(all(unique(gimp$feature_id) %in% trajectory$feature_info$feature_id))
 
   # there should be an inverse correlation between the noise parameters in the generated data, and the importance values
   suppressWarnings({
-    join <- traj$feature_info %>% inner_join(gimp, by = "feature_id")
+    join <- trajectory$feature_info %>% inner_join(gimp, by = "feature_id")
   })
 
   expect_lte(with(join, cor(sd * dropout, importance)), -.1)
 })
 
 test_that("Testing calculate_milestone_feature_importance", {
-  gimp <- calculate_milestone_feature_importance(traj, milestones_oi = traj$milestone_ids)
+  gimp <- calculate_milestone_feature_importance(trajectory, milestones_oi = trajectory$milestone_ids)
 
   expect_equal(gimp %>% map_chr(class), c("milestone_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% traj$feature_info$feature_id))
+  expect_true(all(unique(gimp$feature_id) %in% trajectory$feature_info$feature_id))
 })
 
 test_that("Testing calculate_waypoint_feature_importance", {
-  gimp <- calculate_waypoint_feature_importance(traj)
+  gimp <- calculate_waypoint_feature_importance(trajectory)
 
   expect_equal(gimp %>% map_chr(class), c("waypoint_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% traj$feature_info$feature_id))
+  expect_true(all(unique(gimp$feature_id) %in% trajectory$feature_info$feature_id))
 })
 
 test_that("Testing calculate_cell_feature_importance", {
-  gimp <- calculate_cell_feature_importance(traj)
+  gimp <- calculate_cell_feature_importance(trajectory)
 
   expect_equal(gimp %>% map_chr(class), c("cell_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% traj$feature_info$feature_id))
+  expect_true(all(unique(gimp$feature_id) %in% trajectory$feature_info$feature_id))
 })
 
 test_that("Testing calculate_branching_point_feature_importance", {
   suppressWarnings({
-    gimp <- calculate_branching_point_feature_importance(traj)
+    gimp <- calculate_branching_point_feature_importance(trajectory)
   })
   expect_equal(gimp %>% map_chr(class), c("milestone_id" = "factor", "feature_id" = "factor", "importance" = "numeric"))
 
-  expect_true(all(unique(gimp$feature_id) %in% traj$feature_info$feature_id))
+  expect_true(all(unique(gimp$feature_id) %in% trajectory$feature_info$feature_id))
 })
 
 test_that("Testing calculate_branch_feature_importance", {
-  gimp <- calculate_branch_feature_importance(traj)
+  gimp <- calculate_branch_feature_importance(trajectory)
 
   expect_equal(gimp %>% map_chr(class), c("feature_id" = "factor", "from" = "factor", "to" = "factor", "importance" = "numeric"))
 

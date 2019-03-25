@@ -6,20 +6,20 @@
 calculate_cell_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(
-    traj,
+    trajectory,
     expression_source = "expression",
     fi_method,
     verbose
   ) {
-    if (!is_wrapper_with_waypoints(traj)) {
-      traj <- traj %>% dynwrap::add_waypoints()
+    if (!is_wrapper_with_waypoints(trajectory)) {
+      trajectory <- trajectory %>% dynwrap::add_waypoints()
     }
 
-    waypoints <- traj$waypoints
+    waypoints <- trajectory$waypoints
 
     waypoint_feature_importances <-
       calculate_waypoint_feature_importance(
-        traj = traj,
+        trajectory = trajectory,
         expression_source = expression_source,
         waypoints = waypoints,
         fi_method = fi_method,
@@ -27,7 +27,7 @@ calculate_cell_feature_importance <- inherit_default_params(
       )
 
     closest_waypoints <-
-      traj$waypoints$geodesic_distances %>% {
+      trajectory$waypoints$geodesic_distances %>% {
         tibble(
           cell_id = factor(colnames(.), levels = colnames(.)),
           waypoint_id = factor(rownames(.)[apply(., 2, which.min)], levels = waypoints$waypoints$waypoint_id %>% sort)
