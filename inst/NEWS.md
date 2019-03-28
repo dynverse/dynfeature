@@ -1,4 +1,4 @@
-# dynfeature 0.3.0 (unreleased)
+# dynfeature 1.0.0 (28-03-2019)
 
 * MINOR CHANGE: Use only one core by default.
 
