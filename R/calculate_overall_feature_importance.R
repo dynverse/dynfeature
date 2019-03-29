@@ -4,10 +4,10 @@
 #' \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory,
 #' \code{calculate_milestone_feature_importance} calculates it for individual milestones (e.g. branching points)
 #'
-#' @param traj A trajectory object containing expression values and a trajectory.
+#' @param trajectory A trajectory object containing expression values and a trajectory.
 #' @param expression_source The expression data matrix, with features as columns.
 #'   * If a matrix is provided, it is used as is.
-#'   * If a character is provided, `traj[[expression_source]]` should contain the matrix.
+#'   * If a character is provided, `trajectory[[expression_source]]` should contain the matrix.
 #'   * If a function is provided, that function will be called in order to obtain the expression (useful for lazy loading).
 #' @param milestones_oi The milestone(s) for which to calculate feature importance
 #' @param waypoints The waypoints, optional
@@ -23,13 +23,13 @@
 calculate_overall_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(
-    traj,
+    trajectory,
     expression_source = "expression",
     fi_method,
     verbose
   ) {
     calculate_milestone_feature_importance(
-      traj = traj,
+      trajectory = trajectory,
       expression_source = expression_source,
       fi_method = fi_method,
       verbose = verbose

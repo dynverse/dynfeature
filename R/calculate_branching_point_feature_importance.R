@@ -6,20 +6,20 @@
 calculate_branching_point_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(
-    traj,
+    trajectory,
     expression_source = "expression",
-    milestones_oi = traj$milestone_ids,
+    milestones_oi = trajectory$milestone_ids,
     fi_method,
     verbose
   ) {
     # assign name to each edge
     milestone_network <-
-      traj$milestone_network %>%
+      trajectory$milestone_network %>%
       mutate(edge_id = as.character(row_number())) %>%
       select(from, to, edge_id)
 
     # determine which cell is part of which edge
-    edge_membership <- traj$progressions %>%
+    edge_membership <- trajectory$progressions %>%
       group_by(cell_id) %>%
       top_n(1, percentage) %>%
       ungroup() %>%
@@ -27,7 +27,7 @@ calculate_branching_point_feature_importance <- inherit_default_params(
       reshape2::acast(cell_id~edge_id, value.var="percentage") %>%
       {!is.na(.)}
 
-    expression <- get_expression(traj, expression_source)
+    expression <- get_expression(trajectory, expression_source)
 
     map_df(
       seq_along(milestones_oi),
@@ -38,7 +38,7 @@ calculate_branching_point_feature_importance <- inherit_default_params(
 
         # select the cells which are close to the milestone
         prog <-
-          traj$progressions %>%
+          trajectory$progressions %>%
           filter(from == milestone_oi | to == milestone_oi) %>%
           mutate(milestone_other = ifelse(from == milestone_oi, to, from)) %>%
           group_by(cell_id) %>%
@@ -59,7 +59,7 @@ calculate_branching_point_feature_importance <- inherit_default_params(
             verbose = verbose
           ) %>%
             transmute(
-              milestone_id = factor(milestone_oi, levels = traj$milestone_ids),
+              milestone_id = factor(milestone_oi, levels = trajectory$milestone_ids),
               feature_id,
               importance
             )
