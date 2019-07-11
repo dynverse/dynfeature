@@ -121,3 +121,23 @@ fi_caret <- function(
   )
 }
 
+
+
+#' @rdname fi_methods
+#'
+#' @export
+fi_ranger_rf_tiny <- function(
+  num_trees = 100,
+  num_variables_per_split = 50,
+  num_samples_per_tree = 250,
+  min_node_size = 20,
+  ...
+) {
+  fi_ranger_rf(
+    num.trees = num_trees,
+    mtry = function(nrow, ncol) min(num_variables_per_split, ncol),
+    sample.fraction = function(nrow, ncol) min(num_samples_per_tree / nrow, 1),
+    min.node.size = min_node_size,
+    ...
+  )
+}
