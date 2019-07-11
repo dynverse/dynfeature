@@ -6,22 +6,22 @@
 calculate_waypoint_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(
-    traj,
+    trajectory,
     expression_source = "expression",
     waypoints = NULL,
     fi_method,
     verbose
   ) {
     if (is.null(waypoints)) {
-      if (!is_wrapper_with_waypoints(traj)) {
+      if (!is_wrapper_with_waypoints(trajectory)) {
         message("Adding waypoints to prediction")
-        traj <- traj %>% dynwrap::add_waypoints()
+        trajectory <- trajectory %>% dynwrap::add_waypoints()
       }
 
-      waypoints <- traj$waypoints
+      waypoints <- trajectory$waypoints
     }
 
-    expression <- get_expression(traj, expression_source)
+    expression <- get_expression(trajectory, expression_source)
 
     calculate_feature_importances(
       X = expression,

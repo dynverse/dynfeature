@@ -14,36 +14,38 @@
 \alias{calculate_waypoint_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
-calculate_branch_feature_importance(traj,
+calculate_branch_feature_importance(trajectory,
   expression_source = "expression", fi_method = fi_ranger_rf_lite(),
   verbose = FALSE)
 
-calculate_branching_point_feature_importance(traj,
-  expression_source = "expression", milestones_oi = traj$milestone_ids,
+calculate_branching_point_feature_importance(trajectory,
+  expression_source = "expression",
+  milestones_oi = trajectory$milestone_ids,
   fi_method = fi_ranger_rf_lite(), verbose = FALSE)
 
-calculate_cell_feature_importance(traj, expression_source = "expression",
-  fi_method = fi_ranger_rf_lite(), verbose = FALSE)
+calculate_cell_feature_importance(trajectory,
+  expression_source = "expression", fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE)
 
-calculate_milestone_feature_importance(traj,
+calculate_milestone_feature_importance(trajectory,
   expression_source = "expression", milestones_oi = NULL,
   fi_method = fi_ranger_rf_lite(), verbose = FALSE)
 
-calculate_overall_feature_importance(traj,
+calculate_overall_feature_importance(trajectory,
   expression_source = "expression", fi_method = fi_ranger_rf_lite(),
   verbose = FALSE)
 
-calculate_waypoint_feature_importance(traj,
+calculate_waypoint_feature_importance(trajectory,
   expression_source = "expression", waypoints = NULL,
   fi_method = fi_ranger_rf_lite(), verbose = FALSE)
 }
 \arguments{
-\item{traj}{A trajectory object containing expression values and a trajectory.}
+\item{trajectory}{A trajectory object containing expression values and a trajectory.}
 
 \item{expression_source}{The expression data matrix, with features as columns.
 \itemize{
 \item If a matrix is provided, it is used as is.
-\item If a character is provided, \code{traj[[expression_source]]} should contain the matrix.
+\item If a character is provided, \code{trajectory[[expression_source]]} should contain the matrix.
 \item If a function is provided, that function will be called in order to obtain the expression (useful for lazy loading).
 }}
 

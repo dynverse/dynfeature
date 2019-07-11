@@ -6,20 +6,20 @@
 calculate_branch_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(
-    traj,
+    trajectory,
     expression_source = "expression",
     fi_method,
     verbose
   ) {
     # assign name to each edge
     milestone_network <-
-      traj$milestone_network %>%
+      trajectory$milestone_network %>%
       mutate(edge_id = as.character(row_number())) %>%
       select(from, to, edge_id)
 
     # determine which cell is part of which edge
     edge_membership <-
-      traj$progressions %>%
+      trajectory$progressions %>%
       group_by(cell_id) %>%
       top_n(1, percentage) %>%
       ungroup() %>%
@@ -27,7 +27,7 @@ calculate_branch_feature_importance <- inherit_default_params(
       reshape2::acast(cell_id ~ edge_id, value.var = "percentage") %>%
       {!is.na(.)}
 
-    expression <- get_expression(traj, expression_source)
+    expression <- get_expression(trajectory, expression_source)
 
 
     out <- calculate_feature_importances(
@@ -44,8 +44,8 @@ calculate_branch_feature_importance <- inherit_default_params(
     out %>%
       transmute(
         feature_id,
-        from = factor(from, traj$milestone_ids),
-        to = factor(to, traj$milestone_ids),
+        from = factor(from, trajectory$milestone_ids),
+        to = factor(to, trajectory$milestone_ids),
         importance
       )
   }
