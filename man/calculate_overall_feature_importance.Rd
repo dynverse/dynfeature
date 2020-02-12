@@ -7,6 +7,7 @@
 %   R/calculate_waypoint_feature_importance.R
 \name{calculate_branch_feature_importance}
 \alias{calculate_branch_feature_importance}
+\alias{calculate_branch_feature_importance2}
 \alias{calculate_branching_point_feature_importance}
 \alias{calculate_cell_feature_importance}
 \alias{calculate_milestone_feature_importance}
@@ -17,6 +18,13 @@
 calculate_branch_feature_importance(trajectory,
   expression_source = "expression", fi_method = fi_ranger_rf_lite(),
   verbose = FALSE)
+calculate_branch_feature_importance2(
+  trajectory,
+  expression_source = "expression",
+  fi_method = fi_ranger_rf_lite(),
+  pct_around = 0.5,
+  verbose = FALSE
+)
 
 calculate_branching_point_feature_importance(trajectory,
   expression_source = "expression",
