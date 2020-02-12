@@ -3,7 +3,6 @@
 \docType{package}
 \name{dynfeature}
 \alias{dynfeature}
-\alias{dynfeature-package}
 \title{Dynfeature feature importance}
 \description{
 Dynfeature feature importance

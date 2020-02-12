@@ -4,8 +4,12 @@
 \alias{calculate_feature_importances}
 \title{Calculate feature importance scores}
 \usage{
-calculate_feature_importances(X, Y, fi_method = fi_ranger_rf_lite(),
-  verbose = FALSE)
+calculate_feature_importances(
+  X,
+  Y,
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 }
 \arguments{
 \item{X}{A data frame containing the features as columns.}
