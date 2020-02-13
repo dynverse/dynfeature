@@ -1,12 +1,12 @@
 Package: dynfeature
 Type: Package
-Title: Dynamic feature importance
+Title: Feature importance measures for trajectories
 Version: 1.0.0.9000
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
-Description: Calculating feature importance scores from trajectories
-License: MIT + LICENSE file
+Description: Calculating feature importance scores from trajectories.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/dynverse/dynfeature
