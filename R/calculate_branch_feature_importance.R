@@ -53,6 +53,8 @@ calculate_branch_feature_importance <- inherit_default_params(
 
 #' @rdname calculate_overall_feature_importance
 #'
+#' @param pct_around Percentage of upstream and downstream cells w.r.t. current branch length that will also be included in branch feature importance
+#'
 #' @export
 #'
 #' @include calculate_feature_importances.R

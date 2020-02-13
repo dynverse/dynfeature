@@ -82,6 +82,8 @@ calculate_waypoint_feature_importance(
 
 \item{verbose}{Whether to print out extra information.}
 
+\item{pct_around}{Percentage of upstream and downstream cells w.r.t. current branch length that will also be included in branch feature importance}
+
 \item{milestones_oi}{The milestone(s) for which to calculate feature importance}
 
 \item{waypoints}{The waypoints, optional}
