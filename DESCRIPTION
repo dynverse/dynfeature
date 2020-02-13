@@ -9,6 +9,8 @@ Description: Calculating feature importance scores from trajectories
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/dynverse/dynfeature
+BugReports: https://github.com/dynverse/dynfeature/issues
 Imports:
   dplyr,
   dynutils (>= 1.0.2),
