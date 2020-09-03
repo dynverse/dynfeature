@@ -5,7 +5,7 @@ Version: 1.0.0.9000
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
-Description: Calculating feature importance scores from trajectories
+Description: Calculating feature importance scores from trajectories using the random forests algorithm.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -23,11 +23,8 @@ Imports:
   tibble
 Suggests:
   caret
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Remotes: 
-    dynverse/dynutils@devel,
-    dynverse/dynwrap@devel
 Collate: 
     'calculate_feature_importances.R'
     'calculate_branch_feature_importance.R'

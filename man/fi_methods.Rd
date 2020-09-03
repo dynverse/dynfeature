@@ -4,14 +4,28 @@
 \alias{fi_ranger_rf_lite}
 \alias{fi_ranger_rf}
 \alias{fi_caret}
+\alias{fi_ranger_rf_tiny}
 \title{Feature Importance methods}
 \usage{
-fi_ranger_rf_lite(num_trees = 2000, num_variables_per_split = 50,
-  num_samples_per_tree = 250, min_node_size = 20, ...)
+fi_ranger_rf_lite(
+  num_trees = 2000,
+  num_variables_per_split = 50,
+  num_samples_per_tree = 250,
+  min_node_size = 20,
+  ...
+)
 
 fi_ranger_rf(...)
 
 fi_caret(caret_method, ...)
+
+fi_ranger_rf_tiny(
+  num_trees = 100,
+  num_variables_per_split = 50,
+  num_samples_per_tree = 250,
+  min_node_size = 20,
+  ...
+)
 }
 \arguments{
 \item{num_trees}{(fi_ranger_rf_lite) The number of trees to use}
