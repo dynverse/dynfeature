@@ -1,10 +1,18 @@
 Package: dynfeature
 Type: Package
-Title: Dynamic feature importance
+Title: Dynamic Feature Importance
 Version: 1.0.0.9000
-Authors@R: c(
-  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
-  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
+Authors@R: 
+    c(person(given = "Robrecht",
+             family = "Cannoodt",
+             role = c("aut", "cre"),
+             email = "rcannood@gmail.com",
+             comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
+      person(given = "Wouter",
+             family = "Saelens",
+             role = "aut",
+             email = "wouter.saelens@gmail.com",
+             comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")))
 Description: Calculating feature importance scores from trajectories using the random forests algorithm.
 License: GPL-3
 Encoding: UTF-8
