@@ -73,7 +73,7 @@ suppressWarnings({
   module_expression <-
     distance_from_module %>%
     reshape2::melt(varnames = c("module_id", "cell_id"), value.name = "distance") %>%
-    as_data_frame() %>%
+    as_tibble(.name_repair = "minimal") %>%
     left_join(module_progressions %>% select(-from, -to, -percentage), by = "module_id") %>%
     mutate(
       expr = dnorm(distance, mean = 0, sd = sd) * mult + basal
@@ -83,7 +83,7 @@ suppressWarnings({
 module_expression <- module_expression[module_ids, cell_ids]
 
 # generate gene expression
-feature_info <- data_frame(
+feature_info <- tibble(
   feature_id = feature_ids,
   module = sample.int(num_modules, num_features, replace = TRUE),
   mean = rnorm(num_features, 10, 3) %>% pmax(0),
@@ -95,7 +95,7 @@ expression <-
   feature_info %>%
   group_by(feature_id) %>%
   purrr::pmap_df(function(feature_id, module, mean, sd, dropout) {
-    data_frame(
+    tibble(
       cell_id = colnames(module_expression),
       feature_id,
       expression = ifelse(runif(num_cells) < dropout, 0, module_expression[module, , drop = FALSE] + rnorm(num_cells, mean, sd))
