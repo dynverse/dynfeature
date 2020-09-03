@@ -25,7 +25,7 @@ calculate_waypoint_feature_importance <- inherit_default_params(
 
     calculate_feature_importances(
       X = expression,
-      Y = t(waypoints$geodesic_distances)[rownames(expression),],
+      Y = t(waypoints$geodesic_distances)[rownames(expression),unique(rownames(waypoints$geodesic_distances))],
       fi_method = fi_method,
       verbose = verbose
     ) %>%

@@ -11,7 +11,7 @@ calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(),
     if (dynutils::is_sparse(Y)) {
       Y <- as.matrix(Y)
     }
-    Y <- as_data_frame(Y)
+    Y <- as_tibble(Y, .name_repair = "minimal")
   }
 
   # convert expression to regular matrix if sparse
@@ -36,7 +36,7 @@ calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(),
       importance <- fi_method$fun(X, y, verbose = verbose)
     }
 
-    data_frame(
+    tibble(
       predictor_id = factor(colnames(Y)[[i]], levels = colnames(Y)),
       feature_id = factor(names(importance), levels = names(importance)),
       importance
