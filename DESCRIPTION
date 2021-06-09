@@ -29,7 +29,7 @@ Imports:
   tidyr,
   tibble
 Suggests:
-  caret
+  caret,
   covr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
