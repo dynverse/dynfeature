@@ -11,8 +11,8 @@ milestone_network <- tibble::tribble(
   "A",   "D", 1,       TRUE
 )
 
-num_cells <- 200
-num_features <- 300
+num_cells <- 100
+num_features <- 20
 
 cell_ids <- paste0("cell_", seq_len(num_cells))
 feature_ids <- paste0("feature_", seq_len(num_features))
@@ -39,7 +39,7 @@ trajectory <-
   )
 
 # generate module positions
-num_modules <- 20
+num_modules <- 10
 module_ids <- paste0("module_", seq_len(num_modules))
 module_progressions <-
   milestone_network %>%

@@ -33,13 +33,3 @@ Suggests:
   covr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Collate: 
-    'calculate_feature_importances.R'
-    'calculate_branch_feature_importance.R'
-    'calculate_branching_point_feature_importance.R'
-    'calculate_cell_feature_importance.R'
-    'calculate_milestone_feature_importance.R'
-    'calculate_overall_feature_importance.R'
-    'calculate_waypoint_feature_importance.R'
-    'fi_methods.R'
-    'package.R'

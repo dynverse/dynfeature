@@ -4,7 +4,12 @@
 #' @param Y A data frame of predictor variables, with `nrow(Y) == nrow(X)`.
 #' @param fi_method A feature importance method. Default: `fi_ranger_rf_lite()`. Check `?fi_methods` for a full list of available feature importance methods.
 #' @param verbose Whether to print out extra information.
-calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(), verbose = FALSE) {
+calculate_feature_importances <- function(
+  X,
+  Y,
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+) {
   # if Y is a vector or a matrix, turn it into a data frame
   if (!is.data.frame(Y)) {
     # convert to regular matrix if sparse
@@ -45,5 +50,5 @@ calculate_feature_importances <- function(X, Y, fi_method = fi_ranger_rf_lite(),
 
   # return importances ordered by value
   importances %>%
-    arrange(desc(importance))
+    arrange(desc(.data$importance))
 }

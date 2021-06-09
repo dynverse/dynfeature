@@ -122,7 +122,9 @@ fi_caret <- function(
 
       model <- do.call(caret::train, method_params)
 
-      caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
+      vi <- caret::varImp(model)[[1]]
+
+      set_names(vi[, 1], rownames(vi))
     }
   )
 }

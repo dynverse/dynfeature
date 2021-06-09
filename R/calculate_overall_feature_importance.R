@@ -19,29 +19,24 @@
 #'
 #' @export
 #'
-#' @include calculate_feature_importances.R
-#'
 #' @examples
 #' library(dynwrap)
 #' data(example_trajectory)
 #'
 #' calculate_overall_feature_importance(example_trajectory)
-calculate_overall_feature_importance <- inherit_default_params(
-  super_functions = list(calculate_feature_importances),
-  fun = function(
-    trajectory,
-    expression_source = "expression",
-    fi_method,
-    verbose
-  ) {
-    calculate_milestone_feature_importance(
-      trajectory = trajectory,
-      expression_source = expression_source,
-      fi_method = fi_method,
-      verbose = verbose
-    ) %>%
-      group_by(feature_id) %>%
-      summarise(importance = mean(importance)) %>%
-      arrange(desc(importance))
-  }
-)
+calculate_overall_feature_importance <- function(
+  trajectory,
+  expression_source = "expression",
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+) {
+  calculate_milestone_feature_importance(
+    trajectory = trajectory,
+    expression_source = expression_source,
+    fi_method = fi_method,
+    verbose = verbose
+  ) %>%
+    group_by(.data$feature_id) %>%
+    summarise(importance = mean(.data$importance)) %>%
+    arrange(desc(.data$importance))
+}
