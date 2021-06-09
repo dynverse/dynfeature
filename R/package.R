@@ -1,4 +1,4 @@
-#' Dynamic feature importance
+#' Feature Importance for Dynamic Processes
 #'
 #' Calculating feature importance scores from trajectories using the random forests algorithm.
 #'

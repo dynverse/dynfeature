@@ -20,6 +20,12 @@
 #' @export
 #'
 #' @include calculate_feature_importances.R
+#'
+#' @examples
+#' library(dynwrap)
+#' data(example_trajectory)
+#'
+#' calculate_overall_feature_importance(example_trajectory)
 calculate_overall_feature_importance <- inherit_default_params(
   super_functions = list(calculate_feature_importances),
   fun = function(

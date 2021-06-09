@@ -43,3 +43,9 @@ fi_ranger_rf_tiny(
 \description{
 Feature Importance methods
 }
+\examples{
+library(dynwrap)
+data(example_trajectory)
+
+calculate_overall_feature_importance(example_trajectory, fi_method = fi_ranger_rf())
+}

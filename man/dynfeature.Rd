@@ -3,7 +3,7 @@
 \docType{package}
 \name{dynfeature}
 \alias{dynfeature}
-\title{Dynamic feature importance}
+\title{Feature Importance for Dynamic Processes}
 \description{
 Calculating feature importance scores from trajectories using the random forests algorithm.
 }

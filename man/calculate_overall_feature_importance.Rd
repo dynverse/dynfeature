@@ -82,3 +82,9 @@ Uses the feature importance measures of \code{\link[ranger]{ranger}} or \code{ca
 \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory,
 \code{calculate_milestone_feature_importance} calculates it for individual milestones (e.g. branching points)
 }
+\examples{
+library(dynwrap)
+data(example_trajectory)
+
+calculate_overall_feature_importance(example_trajectory)
+}

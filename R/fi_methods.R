@@ -19,6 +19,12 @@ apply_function_params <- function(params, nrow, ncol) {
 #' @rdname fi_methods
 #'
 #' @export
+#'
+#' @examples
+#' library(dynwrap)
+#' data(example_trajectory)
+#'
+#' calculate_overall_feature_importance(example_trajectory, fi_method = fi_ranger_rf())
 fi_ranger_rf_lite <- function(
   num_trees = 2000,
   num_variables_per_split = 50,
