@@ -36,9 +36,12 @@ fi_ranger_rf_tiny(
 
 \item{min_node_size}{(fi_ranger_rf_lite) The minimum node size, no split will be made if the node size is less than this value.}
 
-\item{...}{Extra parameters to pass onto the underlying feature importnce function.}
+\item{...}{Extra parameters to pass onto the underlying feature importance function.}
 
 \item{caret_method}{(fi_caret) Which caret method to use for feature importance.}
+}
+\value{
+A list containing a helper function for calling a feature importance function.
 }
 \description{
 Feature Importance methods

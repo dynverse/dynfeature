@@ -14,7 +14,9 @@ apply_function_params <- function(params, nrow, ncol) {
 #' @param num_variables_per_split (fi_ranger_rf_lite) The number of variables to sample per split
 #' @param num_samples_per_tree (fi_ranger_rf_lite) The number of samples to bootstrap per split
 #' @param min_node_size (fi_ranger_rf_lite) The minimum node size, no split will be made if the node size is less than this value.
-#' @param ... Extra parameters to pass onto the underlying feature importnce function.
+#' @param ... Extra parameters to pass onto the underlying feature importance function.
+#'
+#' @returns A list containing a helper function for calling a feature importance function.
 #'
 #' @rdname fi_methods
 #'

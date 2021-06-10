@@ -6,7 +6,7 @@ Initial release of dynfeature on CRAN.
 
 * MINOR CHANGE: Support sparse matrices.
 
-* DOCUMENTATION: Add examples.
+* DOCUMENTATION: Add examples and returns.
 
 # dynfeature 0.2.0 (25-10-2018)
 

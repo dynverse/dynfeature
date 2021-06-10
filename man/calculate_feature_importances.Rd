@@ -20,6 +20,16 @@ calculate_feature_importances(
 
 \item{verbose}{Whether to print out extra information.}
 }
+\value{
+A data frame with three columns, \code{predictor_id}, \code{feature_id}, and \code{importance}. \code{predictor_id} is a column in \code{Y}, while \code{feature_id} is a column in \code{X}.
+}
 \description{
 Calculate feature importance scores
+}
+\examples{
+X <- data.frame(matrix(runif(25*10), ncol = 10))
+Y <- data.frame(matrix(runif(25*2), ncol = 2))
+
+# don't run since this function is not exported
+# calculate_feature_importances(X, Y)
 }

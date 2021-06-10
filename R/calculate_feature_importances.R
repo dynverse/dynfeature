@@ -4,6 +4,15 @@
 #' @param Y A data frame of predictor variables, with `nrow(Y) == nrow(X)`.
 #' @param fi_method A feature importance method. Default: `fi_ranger_rf_lite()`. Check `?fi_methods` for a full list of available feature importance methods.
 #' @param verbose Whether to print out extra information.
+#'
+#' @returns A data frame with three columns, `predictor_id`, `feature_id`, and `importance`. `predictor_id` is a column in `Y`, while `feature_id` is a column in `X`.
+#'
+#' @examples
+#' X <- data.frame(matrix(runif(25*10), ncol = 10))
+#' Y <- data.frame(matrix(runif(25*2), ncol = 2))
+#'
+#' # don't run since this function is not exported
+#' # calculate_feature_importances(X, Y)
 calculate_feature_importances <- function(
   X,
   Y,
