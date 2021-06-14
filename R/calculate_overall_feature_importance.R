@@ -11,10 +11,10 @@
 #'   * If a function is provided, that function will be called in order to obtain the expression (useful for lazy loading).
 #' @param milestones_oi The milestone(s) for which to calculate feature importance
 #' @param waypoints The waypoints, optional
+#' @param fi_method A feature importance method. Default: `fi_ranger_rf_lite()`. Check `?fi_methods` for a full list of available feature importance methods.
+#' @param verbose Whether to print out extra information.
 #'
 #' @returns A data frame with two or more columns, `feature_id`, and `importance`. `feature_id` is a column in the trajectory expression matrix. Additional columns may be available depending on the function called.
-#'
-#' @inheritParams calculate_feature_importances
 #'
 #' @importFrom reshape2 acast
 #' @importFrom ranger ranger
