@@ -3,3 +3,5 @@
 ^\.travis
 ^README\.Rmd$
 ^\.git$
+^\.github$
+^cran-comments\.md$

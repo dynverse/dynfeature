@@ -14,11 +14,19 @@ apply_function_params <- function(params, nrow, ncol) {
 #' @param num_variables_per_split (fi_ranger_rf_lite) The number of variables to sample per split
 #' @param num_samples_per_tree (fi_ranger_rf_lite) The number of samples to bootstrap per split
 #' @param min_node_size (fi_ranger_rf_lite) The minimum node size, no split will be made if the node size is less than this value.
-#' @param ... Extra parameters to pass onto the underlying feature importnce function.
+#' @param ... Extra parameters to pass onto the underlying feature importance function.
+#'
+#' @returns A list containing a helper function for calling a feature importance function.
 #'
 #' @rdname fi_methods
 #'
 #' @export
+#'
+#' @examples
+#' library(dynwrap)
+#' data(example_trajectory)
+#'
+#' calculate_overall_feature_importance(example_trajectory, fi_method = fi_ranger_rf())
 fi_ranger_rf_lite <- function(
   num_trees = 2000,
   num_variables_per_split = 50,
@@ -116,7 +124,9 @@ fi_caret <- function(
 
       model <- do.call(caret::train, method_params)
 
-      caret::varImp(model)[[1]] %>% {set_names(.[, 1], rownames(.))}
+      vi <- caret::varImp(model)[[1]]
+
+      set_names(vi[, 1], rownames(vi))
     }
   )
 }

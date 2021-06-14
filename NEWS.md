@@ -1,8 +1,12 @@
-# dynfeature 1.0.0 (28-03-2019)
+# dynfeature 1.0.0
+
+Initial release of dynfeature on CRAN.
 
 * MINOR CHANGE: Use only one core by default.
 
-* MINOR CHANGE: Support sparse matrices
+* MINOR CHANGE: Support sparse matrices.
+
+* DOCUMENTATION: Add examples and returns.
 
 # dynfeature 0.2.0 (25-10-2018)
 

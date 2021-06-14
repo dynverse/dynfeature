@@ -1,14 +1,22 @@
 Package: dynfeature
 Type: Package
-Title: Dynamic feature importance
-Version: 1.0.0.9000
-Authors@R: c(
-  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
-  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
-Description: Calculating feature importance scores from trajectories
+Title: Feature Importance for Dynamic Processes
+Version: 1.0.0
+Authors@R: 
+    c(person(given = "Robrecht",
+             family = "Cannoodt",
+             role = c("aut", "cre"),
+             email = "rcannood@gmail.com",
+             comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
+      person(given = "Wouter",
+             family = "Saelens",
+             role = "aut",
+             email = "wouter.saelens@gmail.com",
+             comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")))
+Description: Calculating feature importance scores from trajectories using the random forests algorithm and more. Saelens and Cannoodt et
+    al. (2019) <doi:10.1038/s41587-019-0071-9>.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Imports:
   dplyr,
   dynutils (>= 1.0.2),
@@ -22,19 +30,7 @@ Imports:
   tidyr,
   tibble
 Suggests:
-  caret
-RoxygenNote: 6.1.1
+  caret,
+  covr
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Remotes: 
-    dynverse/dynutils@devel,
-    dynverse/dynwrap@devel
-Collate: 
-    'calculate_feature_importances.R'
-    'calculate_branch_feature_importance.R'
-    'calculate_branching_point_feature_importance.R'
-    'calculate_cell_feature_importance.R'
-    'calculate_milestone_feature_importance.R'
-    'calculate_overall_feature_importance.R'
-    'calculate_waypoint_feature_importance.R'
-    'fi_methods.R'
-    'package.R'

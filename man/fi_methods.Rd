@@ -4,14 +4,28 @@
 \alias{fi_ranger_rf_lite}
 \alias{fi_ranger_rf}
 \alias{fi_caret}
+\alias{fi_ranger_rf_tiny}
 \title{Feature Importance methods}
 \usage{
-fi_ranger_rf_lite(num_trees = 2000, num_variables_per_split = 50,
-  num_samples_per_tree = 250, min_node_size = 20, ...)
+fi_ranger_rf_lite(
+  num_trees = 2000,
+  num_variables_per_split = 50,
+  num_samples_per_tree = 250,
+  min_node_size = 20,
+  ...
+)
 
 fi_ranger_rf(...)
 
 fi_caret(caret_method, ...)
+
+fi_ranger_rf_tiny(
+  num_trees = 100,
+  num_variables_per_split = 50,
+  num_samples_per_tree = 250,
+  min_node_size = 20,
+  ...
+)
 }
 \arguments{
 \item{num_trees}{(fi_ranger_rf_lite) The number of trees to use}
@@ -22,10 +36,19 @@ fi_caret(caret_method, ...)
 
 \item{min_node_size}{(fi_ranger_rf_lite) The minimum node size, no split will be made if the node size is less than this value.}
 
-\item{...}{Extra parameters to pass onto the underlying feature importnce function.}
+\item{...}{Extra parameters to pass onto the underlying feature importance function.}
 
 \item{caret_method}{(fi_caret) Which caret method to use for feature importance.}
 }
+\value{
+A list containing a helper function for calling a feature importance function.
+}
 \description{
 Feature Importance methods
+}
+\examples{
+library(dynwrap)
+data(example_trajectory)
+
+calculate_overall_feature_importance(example_trajectory, fi_method = fi_ranger_rf())
 }

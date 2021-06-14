@@ -14,30 +14,50 @@
 \alias{calculate_waypoint_feature_importance}
 \title{Calculating feature importances across trajectories}
 \usage{
-calculate_branch_feature_importance(trajectory,
-  expression_source = "expression", fi_method = fi_ranger_rf_lite(),
-  verbose = FALSE)
+calculate_branch_feature_importance(
+  trajectory,
+  expression_source = "expression",
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 
-calculate_branching_point_feature_importance(trajectory,
+calculate_branching_point_feature_importance(
+  trajectory,
   expression_source = "expression",
   milestones_oi = trajectory$milestone_ids,
-  fi_method = fi_ranger_rf_lite(), verbose = FALSE)
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 
-calculate_cell_feature_importance(trajectory,
-  expression_source = "expression", fi_method = fi_ranger_rf_lite(),
-  verbose = FALSE)
+calculate_cell_feature_importance(
+  trajectory,
+  expression_source = "expression",
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 
-calculate_milestone_feature_importance(trajectory,
-  expression_source = "expression", milestones_oi = NULL,
-  fi_method = fi_ranger_rf_lite(), verbose = FALSE)
+calculate_milestone_feature_importance(
+  trajectory,
+  expression_source = "expression",
+  milestones_oi = NULL,
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 
-calculate_overall_feature_importance(trajectory,
-  expression_source = "expression", fi_method = fi_ranger_rf_lite(),
-  verbose = FALSE)
+calculate_overall_feature_importance(
+  trajectory,
+  expression_source = "expression",
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 
-calculate_waypoint_feature_importance(trajectory,
-  expression_source = "expression", waypoints = NULL,
-  fi_method = fi_ranger_rf_lite(), verbose = FALSE)
+calculate_waypoint_feature_importance(
+  trajectory,
+  expression_source = "expression",
+  waypoints = NULL,
+  fi_method = fi_ranger_rf_lite(),
+  verbose = FALSE
+)
 }
 \arguments{
 \item{trajectory}{A trajectory object containing expression values and a trajectory.}
@@ -57,8 +77,17 @@ calculate_waypoint_feature_importance(trajectory,
 
 \item{waypoints}{The waypoints, optional}
 }
+\value{
+A data frame with two or more columns, \code{feature_id}, and \code{importance}. \code{feature_id} is a column in the trajectory expression matrix. Additional columns may be available depending on the function called.
+}
 \description{
 Uses the feature importance measures of \code{\link[ranger]{ranger}} or \code{caret}.
 \code{calculate_overall_feature_importance} calculates the importance for the whole trajectory,
 \code{calculate_milestone_feature_importance} calculates it for individual milestones (e.g. branching points)
+}
+\examples{
+library(dynwrap)
+data(example_trajectory)
+
+calculate_overall_feature_importance(example_trajectory)
 }
