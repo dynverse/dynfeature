@@ -9,7 +9,7 @@ calculate_milestone_feature_importance <- function(
   verbose = FALSE
 ) {
   # get expression from trajectory source or expression source
-  expression <- get_expression(trajectory, expression_source)
+  expression <- dynwrap::get_expression(trajectory, expression_source)
 
   # check trajectory and extract some variables
   testthat::expect_true(dynwrap::is_wrapper_with_trajectory(trajectory))
@@ -32,7 +32,7 @@ calculate_milestone_feature_importance <- function(
     milestone_percentages %>%
     filter(.data$milestone_id %in% milestones_oi) %>%
     reshape2::acast(cell_id ~ milestone_id, value.var = "percentage", fill = 0) %>%
-    expand_matrix(rownames = cell_ids)
+    dynutils::expand_matrix(rownames = cell_ids)
 
   # calculate feature importance scores
   calculate_feature_importances(

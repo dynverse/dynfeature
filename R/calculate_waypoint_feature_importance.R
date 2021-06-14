@@ -9,7 +9,7 @@ calculate_waypoint_feature_importance <- function(
   verbose = FALSE
 ) {
   if (is.null(waypoints)) {
-    if (!is_wrapper_with_waypoints(trajectory)) {
+    if (!dynwrap::is_wrapper_with_waypoints(trajectory)) {
       message("Adding waypoints to prediction")
       trajectory <- trajectory %>% dynwrap::add_waypoints()
     }
@@ -17,7 +17,7 @@ calculate_waypoint_feature_importance <- function(
     waypoints <- trajectory$waypoints
   }
 
-  expression <- get_expression(trajectory, expression_source)
+  expression <- dynwrap::get_expression(trajectory, expression_source)
 
   calculate_feature_importances(
     X = expression,

@@ -7,7 +7,7 @@ calculate_cell_feature_importance <- function(
   fi_method = fi_ranger_rf_lite(),
   verbose = FALSE
 ) {
-  if (!is_wrapper_with_waypoints(trajectory)) {
+  if (!dynwrap::is_wrapper_with_waypoints(trajectory)) {
     trajectory <- trajectory %>% dynwrap::add_waypoints()
   }
 

@@ -1,6 +1,6 @@
 apply_function_params <- function(params, nrow, ncol) {
   map(params, function(param) {
-    if (is.function(param) && length(formalArgs(param)) == 2 && all(c("nrow", "ncol") %in% formalArgs(param))) {
+    if (is.function(param) && length(methods::formalArgs(param)) == 2 && all(c("nrow", "ncol") %in% methods::formalArgs(param))) {
       param(nrow = nrow, ncol = ncol)
     } else {
       param

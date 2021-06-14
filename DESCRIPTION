@@ -17,7 +17,7 @@ Description: Calculating feature importance scores from trajectories using the r
     al. (2019) <doi:10.1038/s41587-019-0071-9>.
 URL: https://github.com/dynverse/dynfeature
 BugReports: https://github.com/dynverse/dynfeature/issues
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5.0)
@@ -26,12 +26,10 @@ Imports:
   dynutils (>= 1.0.2),
   dynwrap (>= 1.0.0),
   purrr,
-  magrittr,
   methods,
   ranger,
   reshape2,
   testthat,
-  tidyr,
   tibble
 Suggests:
   caret,
