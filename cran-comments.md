@@ -8,6 +8,8 @@ Initial release of dynfeature on CRAN.
 
 * DOCUMENTATION: Add examples and returns.
 
+* DOCUMENTATION: Removed documentation for internal function.
+
 ## Test environments
 * local Fedora install, R 4.0
 * ubuntu 20.04, mac os x, windows (on github actions), R 4.0
