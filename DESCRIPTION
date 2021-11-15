@@ -16,6 +16,7 @@ Authors@R:
 Description: Calculating feature importance scores from trajectories using the random forests algorithm and more. Saelens and Cannoodt et
     al. (2019) <doi:10.1038/s41587-019-0071-9>.
 License: GPL-3
+URL: https://github.com/dynverse/dynfeature
 Encoding: UTF-8
 Imports:
   dplyr,
