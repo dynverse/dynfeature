@@ -42,5 +42,6 @@ calculate_branch_feature_importance <- function(
       from = factor(.data$from, trajectory$milestone_ids),
       to = factor(.data$to, trajectory$milestone_ids),
       .data$importance
-    )
+    ) %>%
+    select(all_of(c("feature_id", "from", "to", "importance")))
 }
