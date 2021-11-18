@@ -55,7 +55,7 @@ calculate_branching_point_feature_importance <- function(
           verbose = verbose
         ) %>%
           mutate(
-            milestone_id = factor(milestone_oi, levels = trajectory$milestone_ids),
+            milestone_id = factor(milestone_oi, levels = trajectory$milestone_ids)
           ) %>%
           select(all_of(c("milestone_id", "feature_id", "importance")))
       }
