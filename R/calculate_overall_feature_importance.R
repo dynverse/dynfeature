@@ -16,7 +16,6 @@
 #'
 #' @returns A data frame with two or more columns, `feature_id`, and `importance`. `feature_id` is a column in the trajectory expression matrix. Additional columns may be available depending on the function called.
 #'
-#' @importFrom reshape2 acast
 #' @importFrom ranger ranger
 #'
 #' @export
