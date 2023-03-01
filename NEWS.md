@@ -1,3 +1,7 @@
+# dynfeature 1.0.1
+
+* MINOR CHANGE: Fixes to the description.
+
 # dynfeature 1.0.0
 
 Initial release of dynfeature on CRAN.

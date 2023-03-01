@@ -1,27 +1,19 @@
-# dynfeature 1.0.0
+# dynfeature 1.0.1
 
-Initial release of dynfeature on CRAN.
-
-* MINOR CHANGE: Use only one core by default.
-
-* MINOR CHANGE: Support sparse matrices.
-
-* DOCUMENTATION: Add examples and returns.
-
-* DOCUMENTATION: Removed documentation for internal function.
+* MINOR CHANGE: Fixes to the description.
 
 ## Test environments
-* local Fedora install, R 4.0
-* ubuntu 20.04, mac os x, windows (on github actions), R 4.0
+* local Fedora install, R 4.2
+* ubuntu 22.04, mac os x, windows (on github actions), R 4.2
 * win-builder (devel and release)
 
 ## R CMD check results
 
 ```
-── R CMD check results ─────────────────────────────────── dynfeature 1.0.0 ────
-Duration: 3m 0.1s
+── R CMD check results ─────────────────── dynfeature 1.0.1 ────
+Duration: 1m 47.6s
 
-0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
 ```
