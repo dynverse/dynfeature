@@ -1,18 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
 
-<a href="https://travis-ci.org/dynverse/dynfeature"><img src="https://travis-ci.org/dynverse/dynfeature.svg" align="left"></a>
-<a href="https://codecov.io/gh/dynverse/dynfeature">
-<img src="https://codecov.io/gh/dynverse/dynfeature/branch/master/graph/badge.svg" align="left" /></a>
-[**ℹ️ Tutorials**](https://dynverse.org)
+[![R-CMD-check](https://github.com/dynverse/dynfeature/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/dynfeature/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/dynverse/dynfeature/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dynverse/dynfeature?branch=master)
+[**Tutorials**](https://dynverse.org) <!-- badges: end -->
 
 # Calculating differentially expressed features across a trajectory
 
 Included are methods to
 
-  - Calculate the overall feature importance, using
+-   Calculate the overall feature importance, using
     `calculate_overall_feature_importance`
-  - Calculate the importance of a feature at a bifurcation point, using
+-   Calculate the importance of a feature at a bifurcation point, using
     `calculate_milestone_feature_importance`
 
 The plotting of the top features is nicely intergrated into
@@ -23,47 +24,24 @@ heatmap](https://raw.githubusercontent.com/dynverse/dynplot/devel/.readme_files/
 
 ## Latest changes
 
-Check out `news(package = "dynwrap")` or [NEWS.md](NEWS.md) for a
-full list of
-changes.
+Check out `news(package = "dynwrap")` or [NEWS.md](NEWS.md) for a full
+list of changes.
 
-<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+<!-- This section gets automatically generated from NEWS.md -->
 
-### Recent changes in dynfeature 1.0.0 (28-03-2019)
+### Recent changes in dynfeature 1.0.1
 
-  - MINOR CHANGE: Use only one core by default.
+-   MINOR CHANGE: Fixes to the description.
 
-  - MINOR CHANGE: Support sparse matrices
+### Recent changes in dynfeature 1.0.0
 
-### Recent changes in dynfeature 0.2.0 (25-10-2018)
+Initial release of dynfeature on CRAN.
 
-  - SPEED UP: Added `fi_ranger_rf_lite()`, which scales much better
-    w.r.t. the number of samples and features, at the cost of increasing
-    loss of accuracy at higher dimension sizes.
+-   MINOR CHANGE: Use only one core by default.
 
-  - MAJOR CHANGES: Large cleanup of the code. Most notably,
-    
-      - The format of feature importance method specification and its
-        parameters, with format `fi_method = fi_example_method(param1
-        = 10, param2 = 4)`. Before, it had to be specified as `method =
-        "example_method", method_params = list(param1 = 10, param2
-        = 4)`.
+-   MINOR CHANGE: Support sparse matrices.
 
-  - MINOR CHANGE: Whenever possible, output columns are now factors
-    instead of characters.
-
-  - MINOR CHANGE: Add NEWS, and add news section to README.
-
-  - DOCUMENTATION: Turned on markdown for Roxygen.
-
-  - DOCUMENTATION: Improved documentation on expression\_source.
-
-  - TESTING: Improved testing with a larger dataset, and will check
-    whether the overall feature importance produces decent results.
-
-  - MINOR CHANGE: Feature importance functions will always return
-    factors instead of
-characters.
+-   DOCUMENTATION: Add examples and returns.
 
 ## Dynverse dependencies
 
